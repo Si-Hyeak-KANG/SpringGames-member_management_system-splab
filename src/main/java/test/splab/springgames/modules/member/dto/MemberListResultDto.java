@@ -6,6 +6,7 @@ import test.splab.springgames.modules.member.Level;
 import test.splab.springgames.modules.member.Member;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 회원 목록에 노출되는 회원 정보 DTO입니다.
@@ -30,5 +31,22 @@ public class MemberListResultDto {
                 .level(member.getLevel())
                 .cardTotalCount(member.getCardTotalCount())
                 .build();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MemberListResultDto dto)) return false;
+        return cardTotalCount == dto.cardTotalCount
+                && Objects.equals(id, dto.id)
+                && Objects.equals(name, dto.name)
+                && Objects.equals(email, dto.email)
+                && Objects.equals(joinAt, dto.joinAt)
+                && level == dto.level;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email, joinAt, level, cardTotalCount);
     }
 }
