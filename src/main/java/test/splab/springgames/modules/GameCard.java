@@ -2,6 +2,7 @@ package test.splab.springgames.modules;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import test.splab.springgames.modules.member.Member;
 
 @Getter
 @Entity

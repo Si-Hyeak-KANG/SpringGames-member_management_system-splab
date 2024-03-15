@@ -1,13 +1,17 @@
-package test.splab.springgames.modules;
+package test.splab.springgames.modules.member;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import test.splab.springgames.modules.GameCard;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
 @Entity
 public class Member {
 
@@ -40,5 +44,18 @@ public class Member {
     public void addGameCard(GameCard gameCard) {
         this.gameCardList.add(gameCard);
         gameCard.addMemberIfNotExists(this);
+    }
+
+    public static Member of(String name, String email, LocalDateTime joinAt) {
+        return new Member(name, email, joinAt);
+    }
+
+    private Member(String name, String email, LocalDateTime joinAt) {
+        this.name = name;
+        this.email = email;
+        this.joinAt = joinAt;
+        level = Level.BRONZE;
+        cardTotalCount = 0;
+        cardTotalPrice = 0;
     }
 }
