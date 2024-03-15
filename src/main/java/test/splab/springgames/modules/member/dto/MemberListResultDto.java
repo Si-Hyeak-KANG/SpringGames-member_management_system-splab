@@ -5,6 +5,7 @@ import lombok.Getter;
 import test.splab.springgames.modules.member.Level;
 import test.splab.springgames.modules.member.Member;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ public class MemberListResultDto {
     private Long id;
     private String name;
     private String email;
-    private LocalDateTime joinAt;
+    private LocalDate joinAt;
     private Level level;
     private int cardTotalCount;
 

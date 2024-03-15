@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import test.splab.springgames.modules.GameCard;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +27,9 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(nullable = false)
-    private LocalDateTime joinAt;
+    private LocalDate joinAt;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -46,11 +49,11 @@ public class Member {
         gameCard.addMemberIfNotExists(this);
     }
 
-    public static Member of(String name, String email, LocalDateTime joinAt) {
+    public static Member of(String name, String email, LocalDate joinAt) {
         return new Member(name, email, joinAt);
     }
 
-    private Member(String name, String email, LocalDateTime joinAt) {
+    private Member(String name, String email, LocalDate joinAt) {
         this.name = name;
         this.email = email;
         this.joinAt = joinAt;
