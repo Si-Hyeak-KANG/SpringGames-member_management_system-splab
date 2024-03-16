@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments.html::head}"></head>
+<body>
+<div class="container">
+	<h1 class="text-center">회원 등록</h1>
+	<button onclick="cancel()">취소</button>
+	<form class="needs-validation" id="form" th:action="@{/member/enroll}" th:object="${enrollFormDto}" method="post" novalidate>
+		<div class="flex-box">
+			<button type="submit">등록</button>
+		</div>
+		<div>
+			<label for="name">이름</label>
+			<input class="form-control" id="name" type="text" th:field="*{name}"/>
+			<p class="error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name 유효성 검증 실패</p>
+		</div>
+
+		<div>
+			<label for="email">이메일</label>
+			<input id="email" type="text" th:field="*{email}"/>
+			<p class="error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" >email 유효성 검증 실패</p>
+		</div>
+
+		<div>
+			<label for="join_at">가입날짜</label>
+			<input id="join_at" type="text" th:field="*{joinAt}"/>
+			<p class="error-text" th:if="${#fields.hasErrors('joinAt')}" th:errors="*{joinAt}">joinAt 유효성 검증 실패</p>
+		</div>
+	</form>
+</div>
+
+<footer th:replace="~{fragments.html::footer}"></footer>
+<script type="application/javascript">
+	function cancel() {
+		window.location.href = '/';
+	}
+</script>
+</body>
+</html>
