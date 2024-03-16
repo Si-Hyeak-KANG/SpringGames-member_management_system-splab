@@ -31,9 +31,37 @@
 			display: flex;
 		}
 
+		.error-text {
+			color: red;
+			font-size: small;
+		}
+
+		.success-alert {
+			background-color: lightgreen;
+			height: 50px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			opacity: 80%;
+		}
 	</style>
 </head>
 
 <!--FOOTER-->
 <footer th:fragment="footer"></footer>
+
+<!--ALERT CLOSE FUNCTION-->
+<div th:fragment="close-alert-script (alertId)">
+	<script type="application/javascript">
+		function closeAlert() {
+			setTimeout(function () {
+				document.getElementById("success-alert").style.display = 'none';
+			}, 1_250);
+		}
+		window.onload = function() {
+			closeAlert();
+		};
+	</script>
+</div>
+
 </html>

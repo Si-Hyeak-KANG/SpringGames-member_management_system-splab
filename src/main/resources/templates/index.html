@@ -6,51 +6,54 @@
 
 	<h1 class="text-center">HOME-회원 목록</h1>
 
-<!--이름(입력창), 레벨 필터링(드롭다운박스), 검색(버튼), 회원등록(버튼)-->
-<div class="flex-box">
-	<label for="search-name">이름:</label>
-	<input type="text" id="search-name" name="name">
-	<label for="filter-level"> 레벨 :
-		<select id="filter-level">
-			<option value="">전체</option>
-			<option value="">BRONZE</option>
-			<option value="">SILVER</option>
-			<option value="">GOLD</option>
-		</select>
-	</label>
-	<button>검색</button>
-	<a th:href="@{/member/enroll}">회원등록</a>
-</div>
+	<div id="success-alert" class="success-alert" th:if="${message}" role="alert" th:text="${message}"></div>
 
-<!--회원목롤-->
+	<!--이름(입력창), 레벨 필터링(드롭다운박스), 검색(버튼), 회원등록(버튼)-->
+	<div class="flex-box">
+		<label for="search-name">이름:</label>
+		<input type="text" id="search-name" name="name">
+		<label for="filter-level"> 레벨 :
+			<select id="filter-level">
+				<option value="">전체</option>
+				<option value="">BRONZE</option>
+				<option value="">SILVER</option>
+				<option value="">GOLD</option>
+			</select>
+		</label>
+		<button>검색</button>
+		<a th:href="@{/member/enroll}">회원등록</a>
+	</div>
+
+	<!--회원목롤-->
 	<table class="table">
 		<thead>
-			<tr>
-				<th>ID</th>
-				<th>이름</th>
-				<th>이메일</th>
-				<th>가입일자</th>
-				<th>레벨</th>
-				<th>카드 개수</th>
-			</tr>
+		<tr>
+			<th>ID</th>
+			<th>이름</th>
+			<th>이메일</th>
+			<th>가입일자</th>
+			<th>레벨</th>
+			<th>카드 개수</th>
+		</tr>
 		</thead>
 		<tbody>
-			<tr th:if="${memberList.isEmpty()}">
-				<td colspan="6">등록된 회원이 없습니다.</td>
-			</tr>
-			<tr th:each="member : ${memberList}">
-				<td th:text="${member.id}"></td>
-				<td th:text="${member.name}"></td>
-				<td th:text="${member.email}"></td>
-				<td th:text="${member.joinAt}"></td>
-				<td th:text="${member.level}"></td>
-				<td th:text="${member.cardTotalCount}"></td>
-			</tr>
+		<tr th:if="${memberList.isEmpty()}">
+			<td colspan="6">등록된 회원이 없습니다.</td>
+		</tr>
+		<tr th:each="member : ${memberList}">
+			<td th:text="${member.id}"></td>
+			<td th:text="${member.name}"></td>
+			<td th:text="${member.email}"></td>
+			<td th:text="${member.joinAt}"></td>
+			<td th:text="${member.level}"></td>
+			<td th:text="${member.cardTotalCount}"></td>
+		</tr>
 		</tbody>
 	</table>
 </div>
 
 
 <footer th:replace="~{fragments.html::footer}"></footer>
+<script th:replace="~{fragments.html::close-alert-script (alertId='success-alert')}"></script>
 </body>
 </html>
