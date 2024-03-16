@@ -37,4 +37,8 @@ public class EnrollFormDto {
     public LocalDate getJoinAtToLocalDate() {
         return LocalDate.parse(joinAt, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
+
+    public boolean isNotInvalidJoinAt() {
+        return this.joinAt!=null && this.joinAt.matches("^\\d{4}-\\d{2}-\\d{2}$");
+    }
 }

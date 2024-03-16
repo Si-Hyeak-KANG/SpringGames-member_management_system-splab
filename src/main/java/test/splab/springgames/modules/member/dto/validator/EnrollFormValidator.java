@@ -30,7 +30,9 @@ public class EnrollFormValidator implements Validator {
     public void validate(Object target, Errors errors) {
         EnrollFormDto dto = (EnrollFormDto) target;
         checkExistEmail(errors, dto.getEmail());
-        checkValidJoinAt(errors, dto.getJoinAtToLocalDate());
+        if(dto.isNotInvalidJoinAt()) {
+            checkValidJoinAt(errors, dto.getJoinAtToLocalDate());
+        }
     }
 
     private void checkValidJoinAt(Errors errors, LocalDate joinAt) {
