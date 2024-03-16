@@ -6,4 +6,5 @@ import test.splab.springgames.modules.member.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
+    boolean existsByEmail(String email);
 }

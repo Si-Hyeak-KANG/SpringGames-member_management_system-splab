@@ -5,6 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import test.splab.springgames.modules.member.Member;
+import test.splab.springgames.modules.member.dto.EnrollFormDto;
 import test.splab.springgames.modules.member.dto.MemberListResultDto;
 import test.splab.springgames.modules.member.repository.MemberRepository;
 
@@ -26,5 +27,12 @@ public class MemberServiceImpl implements MemberService {
         return members.stream()
                 .map(MemberListResultDto::from)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Override
+    public void saveNewMember(EnrollFormDto enrollFormDto) {
+        Member newMember = enrollFormDto.toEntity();
+        memberRepository.save(newMember);
     }
 }

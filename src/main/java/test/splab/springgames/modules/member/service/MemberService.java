@@ -1,5 +1,6 @@
 package test.splab.springgames.modules.member.service;
 
+import test.splab.springgames.modules.member.dto.EnrollFormDto;
 import test.splab.springgames.modules.member.dto.MemberListResultDto;
 
 import java.util.List;
@@ -12,4 +13,10 @@ public interface MemberService {
      * @return MemberListResultDto - Home page 회원목록에 출력될 내용
      */
     List<MemberListResultDto> getMemberList();
+
+    /**
+     * 회원을 등록합니다.
+     * @param enrollFormDto - 회원등록시 입력받은 내용
+     */
+    void saveNewMember(EnrollFormDto enrollFormDto);
 }
