@@ -8,9 +8,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import test.splab.springgames.modules.GameCard;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
@@ -60,5 +60,17 @@ public class Member {
         level = Level.BRONZE;
         cardTotalCount = 0;
         cardTotalPrice = 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Member member)) return false;
+        return Objects.equals(memberId, member.memberId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(memberId);
     }
 }
