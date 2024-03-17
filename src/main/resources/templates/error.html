@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments.html::head}"></head>
+<body>
+<div class="container">
+	<h1 class="text-center error-title" th:text="${exception.code} + '&nbsp;' + ${exception.name}"></h1>
+	<h1 class="text-center" th:text="${exception.message}"></h1>
+
+	<div class="block-center"><button  onclick="cancel()">돌아가기</button></div>
+</div>
+<script th:replace="~{fragments.html::close-script}"></script>
+</body>
+</html>

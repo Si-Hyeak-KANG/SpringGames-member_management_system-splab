@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import test.splab.springgames.exception.BusinessLogicException;
+import test.splab.springgames.exception.ExceptionCode;
 import test.splab.springgames.modules.member.Member;
 import test.splab.springgames.modules.member.dto.EnrollFormDto;
 import test.splab.springgames.modules.member.dto.MemberDetailResultDto;
@@ -45,6 +47,6 @@ public class MemberServiceImpl implements MemberService {
 
     private Member findExistMemberById(Long id) {
         return memberRepository.findMemberWithGameCardListByMemberId(id)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 }
