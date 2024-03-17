@@ -34,7 +34,7 @@ class MainControllerTest {
         memberRepository.saveAll(members);
     }
 
-    @DisplayName("메인 화면-회원목록 조회 성공")
+    @DisplayName("[view]메인 화면-회원목록 조회 성공")
     @Test
     void home() throws Exception {
 
