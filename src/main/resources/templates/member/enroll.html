@@ -30,10 +30,6 @@
 </div>
 
 <footer th:replace="~{fragments.html::footer}"></footer>
-<script type="application/javascript">
-	function cancel() {
-		window.location.href = '/';
-	}
-</script>
+<script th:replace="~{fragments.html::close-script}"></script>
 </body>
 </html>
