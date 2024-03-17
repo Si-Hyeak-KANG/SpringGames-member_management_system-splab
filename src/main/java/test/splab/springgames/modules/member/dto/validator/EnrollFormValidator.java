@@ -49,7 +49,7 @@ public class EnrollFormValidator implements Validator {
     private boolean withinOneYearFromNow(LocalDate date) {
         LocalDate currentDate = LocalDate.now();
         LocalDate oneYearAgo = currentDate.minusYears(1);
-        return date.isAfter(oneYearAgo) && date.isBefore(currentDate);
+        return date.isAfter(oneYearAgo) && date.isBefore(currentDate) || date.isEqual(currentDate) || date.isEqual(oneYearAgo);
     }
 
     private void checkExistEmail(Errors errors, String email) {
