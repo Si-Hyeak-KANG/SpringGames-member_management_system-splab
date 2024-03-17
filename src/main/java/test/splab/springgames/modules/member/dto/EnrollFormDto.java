@@ -1,9 +1,6 @@
 package test.splab.springgames.modules.member.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import test.splab.springgames.modules.member.Member;
@@ -18,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 public class EnrollFormDto {
 
     @NotBlank(message = "이름은 공백은 포함될 수 있으나 전체가 공백일 수 없습니다.")
-    @Length(min = 2, max = 100, message = "이름은 최소 2자리 이상 최대 100자리 이하입니다.")
+    @Size(min = 2, max = 100, message = "이름은 최소 2자리 이상 최대 100자리 이하입니다.")
     @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-zA-Z]+$",message = "이름은 한글 또는 영문만 허용합니다.")
     String name;
 
