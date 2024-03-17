@@ -1,6 +1,7 @@
 package test.splab.springgames.modules.member.service;
 
 import test.splab.springgames.modules.member.dto.EnrollFormDto;
+import test.splab.springgames.modules.member.dto.MemberDetailResultDto;
 import test.splab.springgames.modules.member.dto.MemberListResultDto;
 
 import java.util.List;
@@ -19,4 +20,13 @@ public interface MemberService {
      * @param enrollFormDto - 회원등록시 입력받은 내용
      */
     void saveNewMember(EnrollFormDto enrollFormDto);
+
+    /**
+     * ID 에 해당하는 사용자의 정보를 조회합니다.
+     * 만약 ID에 해당하는 사용자가 없을 시 예외가 발생합니다.
+     * @param id 사용자 ID
+     * @return MemberDetailResultDto - 회원 조회 페이지에 출력될 내용
+     * @throws IllegalArgumentException
+     */
+    MemberDetailResultDto getMemberDetailById(Long id);
 }

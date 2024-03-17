@@ -12,8 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@NamedEntityGraph(
+        name = "Member.withGameCardList",
+        attributeNodes = @NamedAttributeNode(value = "gameCardList", subgraph = "gameCardListSubgraph"),
+        subgraphs = @NamedSubgraph(name = "gameCardListSubgraph", attributeNodes = @NamedAttributeNode("game")))
 @Getter
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Member {
 
@@ -27,7 +31,7 @@ public class Member {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd",iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE_TIME)
     @Column(nullable = false)
     private LocalDate joinAt;
 

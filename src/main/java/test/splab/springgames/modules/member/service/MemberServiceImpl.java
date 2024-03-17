@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import test.splab.springgames.modules.member.Member;
 import test.splab.springgames.modules.member.dto.EnrollFormDto;
+import test.splab.springgames.modules.member.dto.MemberDetailResultDto;
 import test.splab.springgames.modules.member.dto.MemberListResultDto;
 import test.splab.springgames.modules.member.repository.MemberRepository;
 
@@ -34,5 +35,16 @@ public class MemberServiceImpl implements MemberService {
     public void saveNewMember(EnrollFormDto enrollFormDto) {
         Member newMember = enrollFormDto.toEntity();
         memberRepository.save(newMember);
+    }
+
+    @Override
+    public MemberDetailResultDto getMemberDetailById(Long id) {
+        Member member = findExistMemberById(id);
+        return MemberDetailResultDto.from(member);
+    }
+
+    private Member findExistMemberById(Long id) {
+        return memberRepository.findMemberWithGameCardListByMemberId(id)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
     }
 }
