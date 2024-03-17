@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments.html::head}"></head>
+<body>
+<div class="container">
+	<h1 class="text-center">회원 조회</h1>
+
+
+	<!--버튼 그룹(돌아가기, 수정, 삭제)-->
+	<div class="flex-box">
+		<button onclick="cancel()">돌아가기</button>
+		<button>수정</button>
+		<button>삭제</button>
+	</div>
+
+	<!--회원 정보-->
+	<div>
+		<label for="member-id">ID: </label>
+		<input class="no-decoration text-right" id="member-id" type="text" th:value="${memberDetail.id}" disabled/>
+	</div>
+	<div>
+		<label for="name">이름: </label>
+		<input class="no-decoration text-right" id="name" type="text" th:value="${memberDetail.name}" disabled/>
+	</div>
+	<div>
+		<label for="email">이메일: </label>
+		<input class="no-decoration text-right" id="email" type="text" th:value="${memberDetail.email}" disabled/>
+	</div>
+	<div>
+		<label for="join-at">가입날짜: </label>
+		<input class="no-decoration text-right" id="join-at" type="text" th:value="${memberDetail.joinAt}" disabled/>
+	</div>
+	<div>
+		<label for="level">레벨: </label>
+		<input class="no-decoration text-right" id="level" type="text" th:value="${memberDetail.level}" disabled/>
+	</div>
+	<div>
+		<label for="card-total-count">소유 카드 총 개수: </label>
+		<input class="no-decoration text-right" id="card-total-count" type="text" th:value="${memberDetail.cardTotalCount}" disabled/>
+	</div>
+	<div>
+		<label for="card-total-price">총 카드 총 가격: </label>
+		<input class="no-decoration text-right" id="card-total-price" type="text" th:value="${memberDetail.cardTotalPrice}" disabled/><small>$</small>
+	</div>
+
+	<!--게임카드목록-->
+	<h3>소유 게임 카드</h3>
+
+	<button>카드추가</button>
+
+	<table class="table">
+		<thead>
+		<tr>
+			<th>ID</th>
+			<th>게임종류</th>
+			<th>타이틀</th>
+			<th>일련번호</th>
+			<th>가격</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:if="${memberDetail.getGameCardsList().isEmpty()}">
+			<td colspan="6">등록된 카드가 없습니다.</td>
+		</tr>
+		<tr th:each="card : ${memberDetail.getGameCardsList()}">
+			<td th:text="${card.id}"></td>
+			<td th:text="${card.game}"></a></td>
+			<td th:text="${card.title}"></td>
+			<td th:text="${card.serialNumber}"></td>
+			<td th:text="${card.price}"></td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+<footer th:replace="~{fragments.html::footer}"></footer>
+<script th:replace="~{fragments.html::close-script}"></script>
+</body>
+</html>

@@ -42,7 +42,7 @@
 		</tr>
 		<tr th:each="member : ${memberList}">
 			<td th:text="${member.id}"></td>
-			<td th:text="${member.name}"></td>
+			<td><a th:href="@{'/member/detail/'+${member.id}}" th:text="${member.name}"></a></td>
 			<td th:text="${member.email}"></td>
 			<td th:text="${member.joinAt}"></td>
 			<td th:text="${member.level}"></td>

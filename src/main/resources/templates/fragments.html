@@ -44,6 +44,15 @@
 			align-items: center;
 			opacity: 80%;
 		}
+
+		.no-decoration {
+			outline: none;
+			border: none;
+		}
+
+		.text-right {
+			text-align: right;
+		}
 	</style>
 </head>
 
@@ -64,4 +73,10 @@
 	</script>
 </div>
 
+<!--Back-->
+<script type="application/javascript" th:fragment="close-script">
+	function cancel() {
+		window.location.href = '/';
+	}
+</script>
 </html>
