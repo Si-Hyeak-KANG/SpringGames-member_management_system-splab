@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import test.splab.springgames.exception.BusinessLogicException;
 import test.splab.springgames.exception.ExceptionCode;
 import test.splab.springgames.modules.member.Member;
+import test.splab.springgames.modules.member.dto.EditFormDto;
 import test.splab.springgames.modules.member.dto.EnrollFormDto;
 import test.splab.springgames.modules.member.dto.MemberDetailResultDto;
 import test.splab.springgames.modules.member.dto.MemberListResultDto;
@@ -41,11 +42,29 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDetailResultDto getMemberDetailById(Long id) {
-        Member member = findExistMemberById(id);
-        return MemberDetailResultDto.from(member);
+        return MemberDetailResultDto.from(findExistMemberWithCardById(id));
     }
 
+    @Override
+    public EditFormDto getMemberEditFormById(Long id) {
+        return EditFormDto.from(findExistMemberById(id));
+    }
+
+    @Transactional
+    @Override
+    public void updateMemberFromEditForm(EditFormDto editFormDto) {
+        Member member = findExistMemberById(editFormDto.getId());
+        member.updateInfo(editFormDto);
+    }
+
+    // 사용자만 조회
     private Member findExistMemberById(Long id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
+
+    // 사용자 조회 fetch join GameCard, Game
+    private Member findExistMemberWithCardById(Long id) {
         return memberRepository.findMemberWithGameCardListByMemberId(id)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }

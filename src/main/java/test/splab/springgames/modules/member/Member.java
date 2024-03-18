@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import test.splab.springgames.modules.GameCard;
+import test.splab.springgames.modules.member.dto.EditFormDto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -76,5 +77,11 @@ public class Member {
     @Override
     public int hashCode() {
         return Objects.hash(memberId);
+    }
+
+    public void updateInfo(EditFormDto editFormDto) {
+        this.name=editFormDto.getName();
+        this.email=editFormDto.getEmail();
+        this.joinAt=editFormDto.getJoinAtToLocalDate();
     }
 }

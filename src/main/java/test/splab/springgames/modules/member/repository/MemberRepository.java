@@ -13,4 +13,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @EntityGraph("Member.withGameCardList")
     Optional<Member> findMemberWithGameCardListByMemberId(Long id);
+
+    Optional<Member> findMemberByEmail(String email);
 }

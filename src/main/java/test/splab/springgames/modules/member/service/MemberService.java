@@ -1,5 +1,6 @@
 package test.splab.springgames.modules.member.service;
 
+import test.splab.springgames.modules.member.dto.EditFormDto;
 import test.splab.springgames.modules.member.dto.EnrollFormDto;
 import test.splab.springgames.modules.member.dto.MemberDetailResultDto;
 import test.splab.springgames.modules.member.dto.MemberListResultDto;
@@ -24,9 +25,25 @@ public interface MemberService {
     /**
      * ID 에 해당하는 사용자의 정보를 조회합니다.
      * 만약 ID에 해당하는 사용자가 없을 시 예외가 발생합니다.
+     * 사용자가 소유한 카드도 함께 조회합니다.
      * @param id 사용자 ID
      * @return MemberDetailResultDto - 회원 조회 페이지에 출력될 내용
      * @throws IllegalArgumentException
      */
     MemberDetailResultDto getMemberDetailById(Long id);
+
+    /**
+     * ID 에 해당하는 사용자의 정보를 조회합니다.
+     * @param id
+     * @return EditFormDto - 회원 수정을 위한 정보
+     * @throws IllegalArgumentException
+     */
+    EditFormDto getMemberEditFormById(Long id);
+
+    /**
+     * 입받은 Form 에 맞게 사용자 정보를 수정합니다.
+     * @param editFormDto - 수정하려는 회원 정보
+     * @throws IllegalArgumentException
+     */
+    void updateMemberFromEditForm(EditFormDto editFormDto);
 }
