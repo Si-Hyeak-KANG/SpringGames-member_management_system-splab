@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments.html::head}"></head>
+<body>
+<div class="container">
+	<h1 class="text-center">회원 수정</h1>
+
+	<div class="flex-box flex-center" style="margin-bottom: 10px">
+		<button onclick="cancel()" class="btn btn-cancel">취소</button>
+		<button type="submit" id="submit-btn" class="btn btn-submit">수정</button>
+	</div>
+
+	<form class="needs-validation" id="form" th:action="@{'/member/edit'}" th:object="${editFormDto}" method="post" novalidate>
+		<div class="flex-box" style="flex-direction: column; align-items: center">
+
+			<div>
+				<label for="id">ID: </label>
+				<input class="no-decoration text-right" id="id" type="text" th:value="${editFormDto.id}" disabled/>
+			</div>
+
+			<input type="hidden" th:field="*{id}" name="id" th:value="${editFormDto.id}" />
+
+			<div style="margin:10px 0;">
+				<label for="name" style="margin-right:20px">이름 : </label>
+				<input class="form-control" id="name" type="text" th:field="*{name}"/>
+			</div>
+			<p class="error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name 유효성 검증 실패</p>
+
+
+			<div style="margin:10px 0;">
+				<label for="email" style="margin-right:20px">이메일 : </label>
+				<input id="email" type="text" th:field="*{email}"/>
+			</div>
+			<p class="error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email 유효성 검증 실패</p>
+
+			<div style="margin:10px 0;">
+				<label for="join_at" style="margin-right:20px">가입날짜 : </label>
+				<input id="join_at" type="text" th:field="*{joinAt}"/>
+			</div>
+			<p class="error-text" th:if="${#fields.hasErrors('joinAt')}" th:errors="*{joinAt}">joinAt 유효성 검증 실패</p>
+		</div>
+	</form>
+</div>
+
+<footer th:replace="~{fragments.html::footer}"></footer>
+<script th:replace="~{fragments.html::cancle-script(url='/member/detail/'+${editFormDto.getId()})}"></script>
+<script th:replace="~{fragments.html::submit-script}"></script>
+</body>
+</html>
