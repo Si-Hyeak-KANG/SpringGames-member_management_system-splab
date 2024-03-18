@@ -4,26 +4,32 @@
 <body>
 <div class="container">
 	<h1 class="text-center">회원 등록</h1>
-	<button onclick="cancel()">취소</button>
-	<form class="needs-validation" id="form" th:action="@{/member/enroll}" th:object="${enrollFormDto}" method="post" novalidate>
-		<div class="flex-box">
-			<button type="submit">등록</button>
-		</div>
-		<div>
-			<label for="name">이름</label>
-			<input class="form-control" id="name" type="text" th:field="*{name}"/>
+
+	<div class="flex-box flex-center" style="margin-bottom: 10px">
+		<button onclick="cancel()" class="btn btn-cancel">취소</button>
+		<button type="submit" id="submit-btn" class="btn btn-submit">등록</button>
+	</div>
+
+	<form class="needs-validation" id="form" th:action="@{/member/enroll}" th:object="${enrollFormDto}" method="post"
+	      novalidate>
+		<div class="flex-box" style="flex-direction: column; align-items: center">
+			<div style="margin:10px 0;">
+				<label for="name" style="margin-right:20px">이름 : </label>
+				<input class="form-control" id="name" type="text" th:field="*{name}"/>
+			</div>
 			<p class="error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name 유효성 검증 실패</p>
-		</div>
 
-		<div>
-			<label for="email">이메일</label>
-			<input id="email" type="text" th:field="*{email}"/>
-			<p class="error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" >email 유효성 검증 실패</p>
-		</div>
 
-		<div>
-			<label for="join_at">가입날짜</label>
-			<input id="join_at" type="text" th:field="*{joinAt}"/>
+			<div style="margin:10px 0;">
+				<label for="email" style="margin-right:20px">이메일 : </label>
+				<input id="email" type="text" th:field="*{email}"/>
+			</div>
+			<p class="error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email 유효성 검증 실패</p>
+
+			<div style="margin:10px 0;">
+				<label for="join_at" style="margin-right:20px">가입날짜 : </label>
+				<input id="join_at" type="text" th:field="*{joinAt}"/>
+			</div>
 			<p class="error-text" th:if="${#fields.hasErrors('joinAt')}" th:errors="*{joinAt}">joinAt 유효성 검증 실패</p>
 		</div>
 	</form>
@@ -31,5 +37,6 @@
 
 <footer th:replace="~{fragments.html::footer}"></footer>
 <script th:replace="~{fragments.html::close-script}"></script>
+<script th:replace="~{fragments.html::submit-script}"></script>
 </body>
 </html>

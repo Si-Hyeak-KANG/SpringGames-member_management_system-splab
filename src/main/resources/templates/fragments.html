@@ -59,16 +59,41 @@
 			text-align: right;
 		}
 
-		.block-center {
-			display: flex;
+		.flex-center {
 			justify-content: center;
 			align-items: center;
 		}
+
+		.btn {
+			cursor: pointer;
+			width: 58px;
+			height: 30px;
+			margin: 0 5px;
+		}
+
+		.btn-cancel {
+			background-color: lightpink;
+		}
+
+		.btn-submit {
+			background-color: lightgreen;
+		}
+
 	</style>
 </head>
 
 <!--FOOTER-->
 <footer th:fragment="footer"></footer>
+
+<!--FORM SUBMIT FUNCTION-->
+<script type="application/javascript" th:fragment="submit-script">
+	window.onload = function() {
+		document.getElementById('submit-btn').onclick = function() {
+			document.getElementById('form').submit();
+			return false;
+		};
+	};
+</script>
 
 <!--ALERT CLOSE FUNCTION-->
 <div th:fragment="close-alert-script (alertId)">
@@ -87,7 +112,7 @@
 <!--Back-->
 <script type="application/javascript" th:fragment="close-script">
 	function cancel() {
-		window.location.href = '/';
+		window.location.href="/";
 	}
 </script>
 </html>
