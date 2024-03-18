@@ -46,7 +46,8 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			opacity: 80%;
+			opacity: 70%;
+			margin: 30px 0;
 		}
 
 		.no-decoration {
@@ -75,7 +76,7 @@
 		function closeAlert() {
 			setTimeout(function () {
 				document.getElementById("success-alert").style.display = 'none';
-			}, 1_250);
+			}, 1_000);
 		}
 		window.onload = function() {
 			closeAlert();
