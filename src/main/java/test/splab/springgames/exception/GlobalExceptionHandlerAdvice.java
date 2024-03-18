@@ -1,9 +1,9 @@
 package test.splab.springgames.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
 import test.splab.springgames.exception.dto.ExceptionDto;
 
 @Slf4j
@@ -11,10 +11,12 @@ import test.splab.springgames.exception.dto.ExceptionDto;
 public class GlobalExceptionHandlerAdvice {
 
     @ExceptionHandler(BusinessLogicException.class)
-    public String handleBusinessLogicException(BusinessLogicException e, Model model) {
+    public ModelAndView handleBusinessLogicException(BusinessLogicException e) {
         ExceptionCode exceptionCode = e.getExceptionCode();
         log.info("reason= [{}] {}", exceptionCode.getName(), exceptionCode.getMessage());
-        model.addAttribute("exception", ExceptionDto.from(exceptionCode));
-        return "error";
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("exception", ExceptionDto.from(exceptionCode));
+        modelAndView.setStatus(e.getExceptionCode().getHttpStatus());
+        return modelAndView;
     }
 }
