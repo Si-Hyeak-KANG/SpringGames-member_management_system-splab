@@ -124,4 +124,16 @@ class MemberControllerTest {
                 Arguments.of("공백",null)
         );
     }
+
+    @DisplayName("회원조회 실패 - ID에 해당하는 사용자가 없을 경우 404 에러와 함께 에러 페이지 이동")
+    @Test
+    void getMemberDetailPage_fail_not_exist_member() throws Exception {
+
+        assertEquals(memberRepository.findAll().size(), 0);
+
+        mockMvc.perform(get("/member/detail/{member-id}", 1L))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("error"))
+                .andExpect(model().attributeExists("exception"));
+    }
 }
