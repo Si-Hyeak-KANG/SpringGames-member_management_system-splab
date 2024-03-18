@@ -26,9 +26,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @MockMvcTest
 class MemberControllerTest {
 
-    public static final String MAIN_HOME_URL = "/";
-    public static final String LENGTH_100 = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuv";
-    public static final String LENGTH_101 = LENGTH_100 + "w";
+    private static final String MAIN_HOME_URL = "/";
+    private static final String COMMON_URL = "/member";
+    private static final String LENGTH_100 = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuv";
+    private static final String LENGTH_101 = LENGTH_100 + "w";
 
     @Autowired MockMvc mockMvc;
     @Autowired MemberRepository memberRepository;
@@ -36,7 +37,7 @@ class MemberControllerTest {
     @DisplayName("[view]회원등록 페이지 조회 성공")
     @Test
     void getMemberEnrollPage() throws Exception {
-        mockMvc.perform(get("/member/enroll"))
+        mockMvc.perform(get(COMMON_URL+"/enroll"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("member/enroll"))
                 .andExpect(model().attributeExists("enrollFormDto"));
@@ -47,7 +48,7 @@ class MemberControllerTest {
     @ParameterizedTest(name = "{0}")
     @MethodSource("provideCorrectEnrollForm")
     void enrollMemberForm(String description, EnrollFormDto actual) throws Exception {
-        mockMvc.perform(post("/member/enroll")
+        mockMvc.perform(post(COMMON_URL+"/enroll")
                         .param("name", actual.getName())
                         .param("email", actual.getEmail())
                         .param("joinAt", actual.getJoinAt()))
@@ -74,7 +75,7 @@ class MemberControllerTest {
     @ValueSource(strings = {"자", LENGTH_101,"-*!@#", "1234"})
     @NullAndEmptySource
     void enrollMemberForm_fail_invalid_name(String name) throws Exception {
-        mockMvc.perform(post("/member/enroll")
+        mockMvc.perform(post(COMMON_URL+"/enroll")
                         .param("name", name)
                         .param("email", "test@email.com")
                         .param("joinAt", LocalDate.now().toString()))
@@ -91,7 +92,7 @@ class MemberControllerTest {
 
         memberRepository.save(Member.of("first", "already@email.com",LocalDate.now()));
 
-        mockMvc.perform(post("/member/enroll")
+        mockMvc.perform(post(COMMON_URL+"/enroll")
                         .param("name", "name")
                         .param("email", email)
                         .param("joinAt", LocalDate.now().toString()))
@@ -104,7 +105,7 @@ class MemberControllerTest {
     @ParameterizedTest(name = "{0} : {1}")
     @MethodSource("provideWrongJoinAt")
     void enrollMemberForm_fail_invalid_joinAt(String description,String joinAt) throws Exception {
-        mockMvc.perform(post("/member/enroll")
+        mockMvc.perform(post(COMMON_URL+"/enroll")
                         .param("name", "name")
                         .param("email", "test@email.com")
                         .param("joinAt", joinAt))
@@ -131,7 +132,7 @@ class MemberControllerTest {
 
         assertEquals(memberRepository.findAll().size(), 0);
 
-        mockMvc.perform(get("/member/detail/{member-id}", 1L))
+        mockMvc.perform(get(COMMON_URL+"detail/{member-id}", 1L))
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("error"))
                 .andExpect(model().attributeExists("exception"));
