@@ -5,11 +5,12 @@
 <div class="container">
 	<h1 class="text-center">회원 조회</h1>
 
+	<div id="success-alert" class="success-alert" th:if="${editMessage}" role="alert" th:text="${editMessage}"></div>
 
 	<!--버튼 그룹(돌아가기, 수정, 삭제)-->
 	<div class="flex-box">
 		<button onclick="cancel()">돌아가기</button>
-		<button>수정</button>
+		<a th:href="@{'/member/edit/'+${memberDetail.id}}">수정</a>
 		<button>삭제</button>
 	</div>
 
@@ -73,6 +74,7 @@
 	</table>
 </div>
 <footer th:replace="~{fragments.html::footer}"></footer>
-<script th:replace="~{fragments.html::close-script}"></script>
+<script th:replace="~{fragments.html::cancle-script(url='/')}"></script>
+<script th:replace="~{fragments.html::close-alert-script (alertId='success-alert')}"></script>
 </body>
 </html>
