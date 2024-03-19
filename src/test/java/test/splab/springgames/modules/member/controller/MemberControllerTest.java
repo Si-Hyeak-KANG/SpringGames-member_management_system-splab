@@ -126,6 +126,17 @@ class MemberControllerTest {
         );
     }
 
+    @DisplayName("[view]회원 조회 페이지 조회 성공")
+    @Test
+    void getMemberDetailPage() throws Exception {
+        memberRepository.save(Member.of("test","test@test.com",LocalDate.now()));
+        Member expected = memberRepository.findAll().stream().findFirst().get();
+        mockMvc.perform(get(COMMON_URL+"/detail/{member-id}",expected.getMemberId()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("member/detail"))
+                .andExpect(model().attributeExists("memberDetail"));
+    }
+
     @DisplayName("회원조회 실패 - ID에 해당하는 사용자가 없을 경우 404 에러와 함께 에러 페이지 이동")
     @Test
     void getMemberDetailPage_fail_not_exist_member() throws Exception {
