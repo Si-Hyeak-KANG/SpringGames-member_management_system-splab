@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import test.splab.springgames.modules.GameCard;
+import test.splab.springgames.modules.card.GameCard;
 import test.splab.springgames.modules.member.dto.EditFormDto;
 
 import java.time.LocalDate;

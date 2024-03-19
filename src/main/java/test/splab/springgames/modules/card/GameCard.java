@@ -1,7 +1,8 @@
-package test.splab.springgames.modules;
+package test.splab.springgames.modules.card;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import test.splab.springgames.modules.game.Game;
 import test.splab.springgames.modules.member.Member;
 
 @Getter

@@ -1,4 +1,4 @@
-package test.splab.springgames.modules;
+package test.splab.springgames.modules.game;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

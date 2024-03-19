@@ -2,7 +2,7 @@ package test.splab.springgames.modules.member.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import test.splab.springgames.modules.GameCard;
+import test.splab.springgames.modules.card.GameCard;
 
 @Getter
 @Builder
