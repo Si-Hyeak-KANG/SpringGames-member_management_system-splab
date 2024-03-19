@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import test.splab.springgames.infra.MockMvcTest;
 import test.splab.springgames.modules.member.Member;
+import test.splab.springgames.modules.member.dto.EditFormDto;
 import test.splab.springgames.modules.member.dto.EnrollFormDto;
 import test.splab.springgames.modules.member.repository.MemberRepository;
 
@@ -147,5 +148,16 @@ class MemberControllerTest {
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("error"))
                 .andExpect(model().attributeExists("exception"));
+    }
+
+    @DisplayName("[view]회원 수정 페이지 조회 성공")
+    @Test
+    void getMemberEditPage() throws Exception {
+        memberRepository.save(Member.of("test","test@test.com",LocalDate.now()));
+        Member expected = memberRepository.findAll().stream().findFirst().get();
+        mockMvc.perform(get(COMMON_URL+"/edit/{member-id}",expected.getMemberId()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("member/edit"))
+                .andExpect(model().attributeExists("editFormDto"));
     }
 }
