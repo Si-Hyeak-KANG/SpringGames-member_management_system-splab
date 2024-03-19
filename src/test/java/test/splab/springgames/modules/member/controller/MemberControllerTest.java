@@ -144,7 +144,7 @@ class MemberControllerTest {
 
         assertEquals(memberRepository.findAll().size(), 0);
 
-        mockMvc.perform(get(COMMON_URL+"detail/{member-id}", 1L))
+        mockMvc.perform(get(COMMON_URL+"/detail/{member-id}", 1L))
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("error"))
                 .andExpect(model().attributeExists("exception"));
