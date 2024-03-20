@@ -44,7 +44,6 @@ class MemberControllerTest {
                 .andExpect(model().attributeExists("enrollFormDto"));
     }
 
-    @Transactional
     @DisplayName("회원등록 성공")
     @ParameterizedTest(name = "{0}")
     @MethodSource("provideCorrectEnrollForm")
