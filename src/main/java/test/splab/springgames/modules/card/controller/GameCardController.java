@@ -15,7 +15,6 @@ import test.splab.springgames.modules.card.service.GameCardService;
 import test.splab.springgames.modules.game.service.GameService;
 import test.splab.springgames.modules.member.service.MemberService;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 @Slf4j
@@ -28,6 +27,8 @@ public class GameCardController {
     private final MemberService memberService;
     private final GameService gameService;
     private final GameCardService gameCardService;
+
+    public static final String CARD_ENROLL_SUCCESS_MESSAGE = "카드를 성공적으로 추가하였습니다.";
 
     @InitBinder("cardEnrollFormDto")
     public void enrollFormInitBinder(WebDataBinder webDataBinder) {
@@ -56,7 +57,7 @@ public class GameCardController {
             return "card/enroll";
         }
         gameCardService.saveNewCard(cardEnrollFormDto);
-        attributes.addFlashAttribute("message", "카드를 성공적으로 추가하였습니다.");
+        attributes.addFlashAttribute("message", CARD_ENROLL_SUCCESS_MESSAGE);
         return "redirect:/member/detail/"+cardEnrollFormDto.getMemberId();
     }
 }
