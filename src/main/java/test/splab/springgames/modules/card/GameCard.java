@@ -41,7 +41,7 @@ public class GameCard {
     }
     public void addMember(Member member) {
         this.member=member;
-
+        member.getGameCardList().add(this);
     }
 
     public void addGame(Game game) {
