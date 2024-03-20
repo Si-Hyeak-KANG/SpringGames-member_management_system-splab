@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments.html::head}"></head>
+<body>
+<div class="container">
+	<h1 class="text-center">카드 등록</h1>
+
+	<div class="flex-box flex-center" style="margin-bottom: 10px">
+		<button onclick="cancel()" class="btn btn-cancel">취소</button>
+		<button type="submit" id="submit-btn" class="btn btn-submit">등록</button>
+	</div>
+
+	<form class="needs-validation" id="form" th:action="@{/card/enroll}" th:object="${cardEnrollFormDto}" method="post"
+	      novalidate>
+		<div class="flex-box" style="flex-direction: column; align-items: center">
+
+			<input type="hidden" th:field="*{memberId}" name="memberId" th:value="${cardEnrollFormDto.getMemberId()}" />
+
+			<div style="margin:10px 0;">
+
+				<label for="gameType" style="margin-right:20px">게임종류 </label>
+				<select id="gameType" th:field="*{gameType}">
+					<option th:each="game : ${gameList}" th:value="${game.name}" th:text="${game.name}"></option>
+				</select>
+			</div>
+
+			<div style="margin:10px 0;">
+				<label for="title" style="margin-right:20px">타이틀 : </label>
+				<input class="form-control" id="title" type="text" th:field="*{title}"/>
+			</div>
+			<p class="error-text" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">name 유효성 검증 실패</p>
+
+			<div style="margin:10px 0;">
+				<label for="serialNumber" style="margin-right:20px">일련번호 : </label>
+				<input id="serialNumber" type="text" th:field="*{serialNumber}"/>
+			</div>
+			<p class="error-text" th:if="${#fields.hasErrors('serialNumber')}" th:errors="*{serialNumber}">email 유효성 검증 실패</p>
+
+			<div style="margin:10px 0;">
+				<label for="price" style="margin-right:20px">가격 : </label>
+				<small>$</small><input id="price" type="text" th:field="*{price}"/>
+			</div>
+			<p class="error-text" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">email 유효성 검증 실패</p>
+	</form>
+</div>
+
+<footer th:replace="~{fragments.html::footer}"></footer>
+<script th:replace="~{fragments.html::cancle-script(url='/member/detail/'+${cardEnrollFormDto.memberId})}"></script>
+<script th:replace="~{fragments.html::submit-script}"></script>
+</body>
+</html>

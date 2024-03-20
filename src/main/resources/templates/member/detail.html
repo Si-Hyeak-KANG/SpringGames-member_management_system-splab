@@ -5,7 +5,7 @@
 <div class="container">
 	<h1 class="text-center">회원 조회</h1>
 
-	<div id="success-alert" class="success-alert" th:if="${editMessage}" role="alert" th:text="${editMessage}"></div>
+	<div id="success-alert" class="success-alert" th:if="${message}" role="alert" th:text="${message}"></div>
 
 	<!--버튼 그룹(돌아가기, 수정, 삭제)-->
 	<div class="flex-box">
@@ -41,13 +41,13 @@
 	</div>
 	<div>
 		<label for="card-total-price">총 카드 총 가격: </label>
-		<input class="no-decoration text-right" id="card-total-price" type="text" th:value="${memberDetail.cardTotalPrice}" disabled/><small>$</small>
+		<input class="no-decoration text-right" id="card-total-price" type="text" th:value="'$'+${memberDetail.cardTotalPrice}" disabled/>
 	</div>
 
 	<!--게임카드목록-->
 	<h3>소유 게임 카드</h3>
 
-	<button>카드추가</button>
+	<a th:href="@{'/card/enroll/member/'+${memberDetail.id}}">카드추가</a>
 
 	<table class="table">
 		<thead>
@@ -68,7 +68,7 @@
 			<td th:text="${card.game}"></a></td>
 			<td th:text="${card.title}"></td>
 			<td th:text="${card.serialNumber}"></td>
-			<td th:text="${card.price}"></td>
+			<td th:text="'$'+${card.price}"></td>
 		</tr>
 		</tbody>
 	</table>
