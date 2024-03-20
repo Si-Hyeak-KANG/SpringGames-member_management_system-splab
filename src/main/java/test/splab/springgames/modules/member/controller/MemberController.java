@@ -83,7 +83,7 @@ public class MemberController {
             return "member/edit";
         }
         memberService.updateMemberFromEditForm(editFormDto);
-        attributes.addFlashAttribute("editMessage", "회원 정보를 성공적으로 수정하였습니다.");
+        attributes.addFlashAttribute("message", "회원 정보를 성공적으로 수정하였습니다.");
         return "redirect:/member/detail/"+editFormDto.getId();
     }
 }
