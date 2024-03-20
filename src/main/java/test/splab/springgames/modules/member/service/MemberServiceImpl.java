@@ -57,6 +57,13 @@ public class MemberServiceImpl implements MemberService {
         member.updateInfo(editFormDto);
     }
 
+    @Override
+    public void isExistedMemberById(Long id) {
+        if (!memberRepository.existsById(id)) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+        }
+    }
+
     // 사용자만 조회
     private Member findExistMemberById(Long id) {
         return memberRepository.findById(id)
