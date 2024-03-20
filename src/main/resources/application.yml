@@ -27,7 +27,10 @@ spring:
     init:
       data-locations: classpath*:db/data/game.sql
       encoding: UTF-8
-      mode: always
+      mode: embedded
+  messages:
+    basename: errors
+    encoding: UTF-8
 
 logging:
   level:
@@ -45,6 +48,20 @@ spring:
     url: jdbc:h2:mem:test
     driver-class-name: org.h2.Driver
     username: sa
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  sql:
+    init:
+      data-locations: classpath*:db/data/game.sql
+      encoding: UTF-8
+      mode: never
 
 logging:
   level:
