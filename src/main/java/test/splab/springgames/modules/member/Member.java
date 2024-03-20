@@ -84,4 +84,14 @@ public class Member {
         this.email=editFormDto.getEmail();
         this.joinAt=editFormDto.getJoinAtToLocalDate();
     }
+
+    public void updateCardTotalCountAndPrice() {
+        this.cardTotalCount = gameCardList.size();
+        double totalPrice = gameCardList.stream().mapToDouble(GameCard::getPrice).sum();
+        this.cardTotalPrice = roundToThirdDecimal(totalPrice);
+    }
+
+    private double roundToThirdDecimal(double totalPrice) {
+        return (double) Math.round(totalPrice * 100) / 100;
+    }
 }
