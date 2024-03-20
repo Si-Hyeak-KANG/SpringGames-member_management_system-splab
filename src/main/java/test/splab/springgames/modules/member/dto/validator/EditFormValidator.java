@@ -11,9 +11,9 @@ import test.splab.springgames.modules.member.service.MemberService;
 import java.time.LocalDate;
 
 /**
- * 회원 등록 form 검증
+ * 회원 수정 form 검증
  * 1) email 중복체크
- * 2) 가입날짜 유효기간 체크 (현재 ~ 1년 이내)
+ * 2) 가입날짜 유효기간 체크 (수정 시점 현재 ~ 1년 이내)
  */
 @Component
 @RequiredArgsConstructor
