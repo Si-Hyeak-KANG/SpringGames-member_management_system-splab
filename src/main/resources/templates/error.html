@@ -6,7 +6,7 @@
 	<h1 class="text-center error-title" th:text="${exception.code} + '&nbsp;' + ${exception.name}"></h1>
 	<h1 class="text-center" th:text="${exception.message}"></h1>
 
-	<div class="flex-box flex-center"><button  onclick="cancel()">돌아가기</button></div>
+	<div class="flex-box flex-center"><button  onclick="cancel()">메인화면 이동</button></div>
 </div>
 <script th:replace="~{fragments.html::cancle-script('/')}"></script>
 </body>
