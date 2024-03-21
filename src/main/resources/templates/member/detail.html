@@ -11,7 +11,11 @@
 	<div class="flex-box">
 		<button onclick="cancel()">돌아가기</button>
 		<a th:href="@{'/member/edit/'+${memberDetail.id}}">수정</a>
-		<button>삭제</button>
+		<form class="needs-validation" id="form" th:action="@{'/member/remove'}" method="post" novalidate>
+			<input type="hidden" name="memberId" th:value="${memberDetail.id}" />
+			<button type="submit" onclick="confirm('회원을 정말로 정말로 삭제할까요?')">삭제</button>
+		</form>
+
 	</div>
 
 	<!--회원 정보-->

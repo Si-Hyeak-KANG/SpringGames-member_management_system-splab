@@ -55,4 +55,12 @@ public interface MemberService {
      * @throws BusinessLogicException - MEMBER_NOT_FOUND
      */
     void isExistedMemberById(Long id);
+
+    /**
+     * Id에 해당하는 사용자를 삭제합니다.
+     * 사용자가 소유했던 카드도 모두 삭제합니다.
+     * @param id
+     * @throws BusinessLogicException - MEMBER_NOT_FOUND
+     */
+    void removeMemberAndAllCardByMember(Long id);
 }

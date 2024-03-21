@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import test.splab.springgames.exception.BusinessLogicException;
 import test.splab.springgames.exception.ExceptionCode;
+import test.splab.springgames.modules.card.repository.GameCardRepository;
 import test.splab.springgames.modules.member.Member;
 import test.splab.springgames.modules.member.dto.EditFormDto;
 import test.splab.springgames.modules.member.dto.EnrollFormDto;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+    private final GameCardRepository gameCardRepository;
 
     @Override
     public List<MemberListResultDto> getMemberList() {
@@ -62,6 +64,14 @@ public class MemberServiceImpl implements MemberService {
         if (!memberRepository.existsById(id)) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
         }
+    }
+
+    @Transactional
+    @Override
+    public void removeMemberAndAllCardByMember(Long id) {
+        Member member = findExistMemberWithCardById(id);
+        gameCardRepository.deleteAllByMember(member);
+        memberRepository.deleteById(id);
     }
 
     // 사용자만 조회

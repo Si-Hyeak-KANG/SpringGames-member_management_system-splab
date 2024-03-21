@@ -1,6 +1,7 @@
 package test.splab.springgames.modules.member.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -8,7 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import test.splab.springgames.exception.BusinessLogicException;
+import test.splab.springgames.exception.ExceptionCode;
+import test.splab.springgames.exception.dto.ExceptionDto;
 import test.splab.springgames.modules.member.dto.EditFormDto;
 import test.splab.springgames.modules.member.dto.EnrollFormDto;
 import test.splab.springgames.modules.member.dto.MemberDetailResultDto;
@@ -23,6 +28,8 @@ import java.util.Objects;
 @RequestMapping("/member")
 @Controller
 public class MemberController {
+
+    public static final String MEMBER_REMOVE_SUCCESS_MESSAGE = "회원을 성공적으로 삭제했습니다.";
 
     private final EnrollFormValidator enrollFormValidator;
     private final EditFormValidator editFormValidator;
@@ -85,5 +92,15 @@ public class MemberController {
         memberService.updateMemberFromEditForm(editFormDto);
         attributes.addFlashAttribute("message", "회원 정보를 성공적으로 수정하였습니다.");
         return "redirect:/member/detail/"+editFormDto.getId();
+    }
+
+    @PostMapping("/remove")
+    public String removeMember(@RequestParam("memberId") Long memberId, RedirectAttributes attributes) {
+        if (memberId == null) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_BAD_REQUEST);
+        }
+        memberService.removeMemberAndAllCardByMember(memberId);
+        attributes.addFlashAttribute("message", MEMBER_REMOVE_SUCCESS_MESSAGE);
+        return "redirect:/";
     }
 }
