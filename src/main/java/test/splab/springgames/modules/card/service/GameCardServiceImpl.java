@@ -1,6 +1,7 @@
 package test.splab.springgames.modules.card.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import test.splab.springgames.exception.BusinessLogicException;
@@ -13,6 +14,7 @@ import test.splab.springgames.modules.game.repository.GameRepository;
 import test.splab.springgames.modules.member.Member;
 import test.splab.springgames.modules.member.repository.MemberRepository;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -35,6 +37,21 @@ public class GameCardServiceImpl implements GameCardService {
         // 사용자 소유 총 카드 관련 정보 갱신
         member.updateCardTotalCountAndPrice();
         // TODO 레벨 변경 및 slack 알림 전송
+    }
+
+    @Transactional
+    @Override
+    public void removeGameCardById(Long cardId) {
+        GameCard card = checkValidCardId(cardId);
+        Member member = card.getMember();
+        gameCardRepository.deleteById(cardId);
+        member.getGameCardList().remove(card);
+        member.updateCardTotalCountAndPrice();
+    }
+
+    private GameCard checkValidCardId(Long cardId) {
+        return gameCardRepository.findById(cardId)
+                .orElseThrow(()-> new BusinessLogicException(ExceptionCode.CARD_NOT_FOUND));
     }
 
     private Game getGameByGameName(String name) {

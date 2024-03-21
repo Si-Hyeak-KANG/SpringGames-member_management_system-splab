@@ -3,6 +3,7 @@ package test.splab.springgames.modules.card.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import test.splab.springgames.modules.card.dto.CardEnrollFormDto;
+import test.splab.springgames.modules.card.dto.CardRemoveRequestDto;
 import test.splab.springgames.modules.card.dto.validator.CardEnrollFormValidator;
 import test.splab.springgames.modules.card.service.GameCardService;
 import test.splab.springgames.modules.game.service.GameService;
@@ -59,5 +61,12 @@ public class GameCardController {
         gameCardService.saveNewCard(cardEnrollFormDto);
         attributes.addFlashAttribute("message", CARD_ENROLL_SUCCESS_MESSAGE);
         return "redirect:/member/detail/"+cardEnrollFormDto.getMemberId();
+    }
+
+    @PostMapping("/remove")
+    @ResponseBody
+    public ResponseEntity removeCard(@RequestBody @Valid CardRemoveRequestDto cardRemoveRequestDto) {
+        gameCardService.removeGameCardById(cardRemoveRequestDto.getCardId());
+        return ResponseEntity.ok().build();
     }
 }

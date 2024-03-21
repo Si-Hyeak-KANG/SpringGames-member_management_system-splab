@@ -37,11 +37,13 @@
 	</div>
 	<div>
 		<label for="card-total-count">소유 카드 총 개수: </label>
-		<input class="no-decoration text-right" id="card-total-count" type="text" th:value="${memberDetail.cardTotalCount}" disabled/>
+		<input class="no-decoration text-right" id="card-total-count" type="text" th:value="${memberDetail.cardTotalCount}"
+		       disabled/>
 	</div>
 	<div>
 		<label for="card-total-price">총 카드 총 가격: </label>
-		<input class="no-decoration text-right" id="card-total-price" type="text" th:value="'$'+${memberDetail.cardTotalPrice}" disabled/>
+		<input class="no-decoration text-right" id="card-total-price" type="text"
+		       th:value="'$'+${memberDetail.cardTotalPrice}" disabled/>
 	</div>
 
 	<!--게임카드목록-->
@@ -57,6 +59,7 @@
 			<th>타이틀</th>
 			<th>일련번호</th>
 			<th>가격</th>
+			<th></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -64,11 +67,14 @@
 			<td colspan="6">등록된 카드가 없습니다.</td>
 		</tr>
 		<tr th:each="card : ${memberDetail.getGameCardsList()}">
-			<td th:text="${card.id}"></td>
-			<td th:text="${card.game}"></a></td>
+			<td th:text="${card.id}" class="card-id"></td>
+			<td th:text="${card.game}"></td>
 			<td th:text="${card.title}"></td>
 			<td th:text="${card.serialNumber}"></td>
 			<td th:text="'$'+${card.price}"></td>
+			<td>
+				<button class="remove-button">[삭제]</button>
+			</td>
 		</tr>
 		</tbody>
 	</table>
@@ -76,5 +82,39 @@
 <footer th:replace="~{fragments.html::footer}"></footer>
 <script th:replace="~{fragments.html::cancle-script(url='/')}"></script>
 <script th:replace="~{fragments.html::close-alert-script (alertId='success-alert')}"></script>
+<script type="application/javascript">
+
+	$(document).ready(function() {
+		$('.remove-button').click(function() {
+			var cardId = $(this).closest('tr').find('.card-id').text();
+			removeCard(cardId);
+		});
+	});
+
+	function removeCard(id) {
+		if (confirm('카드를 정말로 삭제할까요?')) {
+			const memberId = [[${memberDetail.id}]];
+			$.ajax({
+				type: "POST",
+				url: "/card/remove",
+				contentType: "application/json",
+				data: JSON.stringify({
+					"cardId" : id,
+					"memberId" : memberId
+				}),
+				success: function (response) {
+					window.location.reload();
+					alert("카드를 성공적으로 삭제하였습니다.");
+				},
+				error: function (xhr, status, error) {
+					alert("카드 삭제가 실패하였습니다. 서버에 문의해주세요.")
+				}
+			});
+		} else {
+			return false;
+		}
+	}
+
+</script>
 </body>
 </html>

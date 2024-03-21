@@ -12,7 +12,16 @@ public interface GameCardService {
      * @param cardEnrollFormDto
      * @throws BusinessLogicException
      *  - MEMBER_NOT_FOUND
-     *  - CARD_NOT_FOUND
+     *  - GAME_NOT_FOUND
      */
     void saveNewCard(CardEnrollFormDto cardEnrollFormDto);
+
+    /**
+     * 입력받은 Id에 해당하는 카드를 제거합니다.
+     * 해당 카드를 소유한 사용자의 정보도 변경 내용에 맞게 갱신합니다.
+     * @param cardId
+     * @throws BusinessLogicException
+     *  - CARD_NOT_FOUND
+     */
+    void removeGameCardById(Long cardId);
 }
