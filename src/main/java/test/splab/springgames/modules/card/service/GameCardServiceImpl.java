@@ -37,6 +37,8 @@ public class GameCardServiceImpl implements GameCardService {
         // 사용자 소유 총 카드 관련 정보 갱신
         member.updateCardTotalCountAndPrice();
         // TODO 레벨 변경 및 slack 알림 전송
+        boolean result = member.isChangeLevelAccordingToPolicy();
+        if (result) log.info("level changed!!! {}", member.getLevel());
     }
 
     @Transactional
@@ -47,6 +49,8 @@ public class GameCardServiceImpl implements GameCardService {
         gameCardRepository.deleteById(cardId);
         member.getGameCardList().remove(card);
         member.updateCardTotalCountAndPrice();
+        boolean result = member.isChangeLevelAccordingToPolicy();
+        if (result) log.info("level changed!!! {}", member.getLevel());
     }
 
     private GameCard checkValidCardId(Long cardId) {
