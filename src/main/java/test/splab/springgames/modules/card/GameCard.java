@@ -54,4 +54,8 @@ public class GameCard {
         }
     }
 
+    public void addMemberAndGame(Member member, Game game) {
+        this.member = member;
+        this.game = game;
+    }
 }

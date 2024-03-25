@@ -13,6 +13,8 @@ import test.splab.springgames.modules.game.Game;
 import test.splab.springgames.modules.game.repository.GameRepository;
 import test.splab.springgames.modules.member.Member;
 import test.splab.springgames.modules.member.repository.MemberRepository;
+import test.splab.springgames.modules.message.SlackWebhookSendService;
+import test.splab.springgames.modules.message.dto.SendMessageDto;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ public class GameCardServiceImpl implements GameCardService {
     private final GameCardRepository gameCardRepository;
     private final MemberRepository memberRepository;
     private final GameRepository gameRepository;
+    private final SlackWebhookSendService slackWebhookSendService;
 
     @Transactional
     @Override
@@ -30,15 +33,16 @@ public class GameCardServiceImpl implements GameCardService {
         Member member = getMemberByMemberId(cardEnrollFormDto.getMemberId());
         Game game = getGameByGameName(cardEnrollFormDto.getGameType());
         GameCard gameCard = cardEnrollFormDto.toEntity();
-        gameCard.addMember(member);
-        gameCard.addGame(game);
+        gameCard.addMemberAndGame(member, game);
         gameCardRepository.save(gameCard);
-
         // 사용자 소유 총 카드 관련 정보 갱신
         member.updateCardTotalCountAndPrice();
-        // TODO 레벨 변경 및 slack 알림 전송
         boolean result = member.isChangeLevelAccordingToPolicy();
-        if (result) log.info("level changed!!! {}", member.getLevel());
+        if (result) {
+            log.info("level changed!!! {}", member.getLevel());
+            slackWebhookSendService.sendMessage(SendMessageDto.from(member));
+        }
+
     }
 
     @Transactional
@@ -50,7 +54,10 @@ public class GameCardServiceImpl implements GameCardService {
         member.getGameCardList().remove(card);
         member.updateCardTotalCountAndPrice();
         boolean result = member.isChangeLevelAccordingToPolicy();
-        if (result) log.info("level changed!!! {}", member.getLevel());
+        if (result) {
+            log.info("level changed!!! {}", member.getLevel());
+            slackWebhookSendService.sendMessage(SendMessageDto.from(member));
+        }
     }
 
     private GameCard checkValidCardId(Long cardId) {
