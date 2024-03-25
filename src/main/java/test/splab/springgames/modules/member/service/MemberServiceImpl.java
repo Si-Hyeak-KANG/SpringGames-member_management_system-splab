@@ -28,13 +28,18 @@ public class MemberServiceImpl implements MemberService {
     private final GameCardRepository gameCardRepository;
 
     @Override
-    public List<MemberListResultDto> getMemberList(Level level) {
+    public List<MemberListResultDto> getMemberList(Level level, String name) {
         List<Member> members = new ArrayList<>();
-        if (level!=null) {
-            members = memberRepository.findAllByLevel(level, Sort.by("joinAt", "memberId").descending());
+        if (level == null && name == null) {
+            members = memberRepository.findAll(Sort.by(Sort.Order.desc("joinAt"), Sort.Order.desc("memberId")));
+        } else if (level != null && name != null) {
+            members = memberRepository.findAllByLevelAndNameContaining(level, name, Sort.by(Sort.Order.desc("joinAt"), Sort.Order.desc("memberId")));
+        } else if (level != null) {
+            members = memberRepository.findAllByLevel(level, Sort.by(Sort.Order.desc("joinAt"), Sort.Order.desc("memberId")));
         } else {
-            members = memberRepository.findAll(Sort.by("joinAt", "memberId").descending());
+            members = memberRepository.findAllByNameContaining(name, Sort.by(Sort.Order.desc("joinAt"), Sort.Order.desc("memberId")));
         }
+
         return members.stream()
                 .map(MemberListResultDto::from)
                 .collect(Collectors.toList());

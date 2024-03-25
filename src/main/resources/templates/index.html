@@ -11,7 +11,7 @@
 	<!--이름(입력창), 레벨 필터링(드롭다운박스), 검색(버튼), 회원등록(버튼)-->
 	<div class="flex-box">
 		<label for="search-name">이름:</label>
-		<input type="text" id="search-name" name="name">
+		<input type="text" id="search-name" name="name" th:value="${searchName}">
 		<label for="filter-level"> 레벨 :
 			<select id="filter-level" th:value="${currentLevel}">
 				<option value="ALL" th:selected="${currentLevel}=='ALL'">전체</option>
@@ -58,10 +58,12 @@
 <script type="application/javascript">
 	function searchButton() {
 
-		let select = document.getElementById('filter-level');
+		let level = document.getElementById('filter-level').value;
+		let searchName = document.getElementById('search-name').value;
 
 		var currentUrl = new URL(window.location);
-		currentUrl.searchParams.set('level', select.value);
+		if(level!=null) currentUrl.searchParams.set('level', level);
+		if (searchName.length > 0) currentUrl.searchParams.set('name', searchName);
 		window.location.href = currentUrl.href;
 	}
 </script>

@@ -24,8 +24,11 @@ public class MainController {
      * @return index-page
      */
     @GetMapping("/")
-    public String home(@RequestParam(value = "level", defaultValue = "ALL") String level, Model model) {
-        List<MemberListResultDto> memberList = memberService.getMemberList(Level.of(level));
+    public String home(@RequestParam(value = "level", defaultValue = "ALL") String level,
+                       @RequestParam(value = "name", required = false) String name,
+                       Model model) {
+        List<MemberListResultDto> memberList = memberService.getMemberList(Level.of(level), name);
+        model.addAttribute("searchName", name);
         model.addAttribute("currentLevel", level);
         model.addAttribute("memberList", memberList);
         return "index";
