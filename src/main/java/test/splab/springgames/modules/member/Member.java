@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@Table(indexes = @Index(columnList = "level"))
 public class Member {
 
     @Id

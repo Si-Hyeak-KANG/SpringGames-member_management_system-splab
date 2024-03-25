@@ -42,6 +42,6 @@ class MainControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
                 .andExpect(model().attributeExists("memberList"))
-                .andExpect(model().attribute("memberList", memberService.getMemberList()));
+                .andExpect(model().attribute("memberList", memberService.getMemberList(null)));
     }
 }

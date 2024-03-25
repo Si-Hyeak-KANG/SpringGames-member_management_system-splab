@@ -13,14 +13,14 @@
 		<label for="search-name">이름:</label>
 		<input type="text" id="search-name" name="name">
 		<label for="filter-level"> 레벨 :
-			<select id="filter-level">
-				<option value="">전체</option>
-				<option value="">BRONZE</option>
-				<option value="">SILVER</option>
-				<option value="">GOLD</option>
+			<select id="filter-level" th:value="${currentLevel}">
+				<option value="ALL" th:selected="${currentLevel}=='ALL'">전체</option>
+				<option value="BRONZE" th:selected="${currentLevel}=='BRONZE'">BRONZE</option>
+				<option value="SILVER" th:selected="${currentLevel}=='SILVER'">SILVER</option>
+				<option value="GOLD" th:selected="${currentLevel}=='GOLD'">GOLD</option>
 			</select>
 		</label>
-		<button>검색</button>
+		<button onclick="searchButton()">검색</button>
 		<a th:href="@{/member/enroll}">회원등록</a>
 	</div>
 
@@ -55,5 +55,15 @@
 
 <footer th:replace="~{fragments.html::footer}"></footer>
 <script th:replace="~{fragments.html::close-alert-script (alertId='success-alert')}"></script>
+<script type="application/javascript">
+	function searchButton() {
+
+		let select = document.getElementById('filter-level');
+
+		var currentUrl = new URL(window.location);
+		currentUrl.searchParams.set('level', select.value);
+		window.location.href = currentUrl.href;
+	}
+</script>
 </body>
 </html>

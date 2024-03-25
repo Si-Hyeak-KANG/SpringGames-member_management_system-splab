@@ -1,10 +1,16 @@
 package test.splab.springgames.modules.main;
 
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import test.splab.springgames.modules.member.Level;
+import test.splab.springgames.modules.member.dto.MemberListResultDto;
 import test.splab.springgames.modules.member.service.MemberService;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,9 +24,10 @@ public class MainController {
      * @return index-page
      */
     @GetMapping("/")
-    public String home(Model model) {
-
-        model.addAttribute("memberList", memberService.getMemberList());
+    public String home(@RequestParam(value = "level", defaultValue = "ALL") String level, Model model) {
+        List<MemberListResultDto> memberList = memberService.getMemberList(Level.of(level));
+        model.addAttribute("currentLevel", level);
+        model.addAttribute("memberList", memberList);
         return "index";
     }
 }

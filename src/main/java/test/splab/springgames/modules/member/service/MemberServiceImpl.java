@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import test.splab.springgames.exception.BusinessLogicException;
 import test.splab.springgames.exception.ExceptionCode;
 import test.splab.springgames.modules.card.repository.GameCardRepository;
+import test.splab.springgames.modules.member.Level;
 import test.splab.springgames.modules.member.Member;
 import test.splab.springgames.modules.member.dto.EditFormDto;
 import test.splab.springgames.modules.member.dto.EnrollFormDto;
@@ -14,6 +15,7 @@ import test.splab.springgames.modules.member.dto.MemberDetailResultDto;
 import test.splab.springgames.modules.member.dto.MemberListResultDto;
 import test.splab.springgames.modules.member.repository.MemberRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,10 +28,13 @@ public class MemberServiceImpl implements MemberService {
     private final GameCardRepository gameCardRepository;
 
     @Override
-    public List<MemberListResultDto> getMemberList() {
-        List<Member> members =
-                memberRepository.findAll(Sort.by("joinAt", "memberId").descending());
-
+    public List<MemberListResultDto> getMemberList(Level level) {
+        List<Member> members = new ArrayList<>();
+        if (level!=null) {
+            members = memberRepository.findAllByLevel(level, Sort.by("joinAt", "memberId").descending());
+        } else {
+            members = memberRepository.findAll(Sort.by("joinAt", "memberId").descending());
+        }
         return members.stream()
                 .map(MemberListResultDto::from)
                 .collect(Collectors.toList());
