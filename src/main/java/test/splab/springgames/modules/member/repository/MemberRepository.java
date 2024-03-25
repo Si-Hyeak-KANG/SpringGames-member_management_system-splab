@@ -1,5 +1,7 @@
 package test.splab.springgames.modules.member.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,9 +21,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Optional<Member> findMemberByEmail(String email);
 
-    List<Member> findAllByLevelAndNameContaining(Level level, String name, Sort sort);
+    Page<Member> findAllByLevelAndNameContaining(Level level, String name, Pageable pageable);
 
-    List<Member> findAllByLevel(Level level, Sort sort);
+    Page<Member> findAllByLevel(Level level, Pageable pageable);
 
-    List<Member> findAllByNameContaining(String name, Sort sort);
+    Page<Member> findAllByNameContaining(String name, Pageable pageable);
 }

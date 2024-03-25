@@ -37,10 +37,10 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr th:if="${memberList.isEmpty()}">
+		<tr th:if="${data.memberList.isEmpty()}">
 			<td colspan="6">등록된 회원이 없습니다.</td>
 		</tr>
-		<tr th:each="member : ${memberList}">
+		<tr th:each="member : ${data.memberList}">
 			<td th:text="${member.id}"></td>
 			<td><a th:href="@{'/member/detail/'+${member.id}}" th:text="${member.name}"></a></td>
 			<td th:text="${member.email}"></td>
@@ -50,22 +50,72 @@
 		</tr>
 		</tbody>
 	</table>
-</div>
 
+	<nav class="flex-box flex-center">
+		<input type="hidden" id="currentPage" th:value="${data.pageNumber}"/>
+		<ul class="pagination">
+			<li class="page-item" id="previous" th:if="${data.pageNumber!=1}">
+				<a class="page-link" onclick="selectPrevButton()">이전</a>
+			</li>
+			<li class="page-item" th:each="i : ${#numbers.sequence(1,data.totalPages)}" id="${i}" th:classappend="${data.pageNumber == i} ? 'active'">
+				<a class="page-link"
+				   th:onclick="|javascript:selectNumberButton('${i}')|"
+				   th:text="${i}">
+
+				</a>
+			</li>
+			<li class="page-item" id="next" th:if="${data.pageNumber}!=${data.totalPages}">
+				<a class="page-link" onclick="selectNextButton()">다음</a>
+			</li>
+		</ul>
+	</nav>
+</div>
 
 <footer th:replace="~{fragments.html::footer}"></footer>
 <script th:replace="~{fragments.html::close-alert-script (alertId='success-alert')}"></script>
 <script type="application/javascript">
-	function searchButton() {
 
+	var currentUrl = new URL(window.location);
+	let currentPage = document.getElementById("currentPage").value;
+
+	function searchButton() {
 		let level = document.getElementById('filter-level').value;
 		let searchName = document.getElementById('search-name').value;
-
-		var currentUrl = new URL(window.location);
 		if(level!=null) currentUrl.searchParams.set('level', level);
 		if (searchName.length > 0) currentUrl.searchParams.set('name', searchName);
 		window.location.href = currentUrl.href;
 	}
+
+	function selectPrevButton() {
+		var prevPage = parseInt(currentPage, 10)-1;
+		currentUrl.searchParams.set("page", prevPage.toString());
+		window.location.href = currentUrl.href;
+	}
+
+	function selectNumberButton(number) {
+		currentUrl.searchParams.set("page",number);
+		window.location.href = currentUrl.href;
+	}
+
+	function selectNextButton() {
+		var nextPage = parseInt(currentPage, 10)+1;
+		currentUrl.searchParams.set("page", nextPage.toString());
+		window.location.href = currentUrl.href;
+	}
+
+	function highlightCurrentPage() {
+		var pageItems = document.querySelectorAll(".page-item"); // 모든 페이지 아이템 가져오기
+		pageItems.forEach(function(item) {
+			if (item.id === currentPage) {
+				item.classList.add(" active"); // 현재 페이지에 해당하는 아이템에 active 클래스 추가
+			} else {
+				item.classList.remove(" active"); // 다른 페이지 아이템에서 active 클래스 제거
+			}
+		});
+	}
+
+	// 페이지 로드 시에 현재 페이지 강조 함수 호출
+	highlightCurrentPage();
 </script>
 </body>
 </html>
