@@ -2,7 +2,6 @@ package test.splab.springgames.modules.message;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import test.splab.springgames.modules.message.dto.SendMessageDto;
 
 @Slf4j
 @RequiredArgsConstructor
-@Profile("local")
 @Service
 public class SlackWebhookSendServiceImpl implements SlackWebhookSendService {
 
