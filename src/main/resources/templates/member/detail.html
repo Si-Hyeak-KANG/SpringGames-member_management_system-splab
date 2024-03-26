@@ -13,7 +13,7 @@
 		<a th:href="@{'/member/edit/'+${memberDetail.id}}">수정</a>
 		<form class="needs-validation" id="form" th:action="@{'/member/remove'}" method="post" novalidate>
 			<input type="hidden" name="memberId" th:value="${memberDetail.id}" />
-			<button type="submit" onclick="confirm('회원을 정말로 정말로 삭제할까요?')">삭제</button>
+			<button type="submit" onclick="return confirm('회원을 정말로 정말로 삭제할까요?')">삭제</button>
 		</form>
 
 	</div>
