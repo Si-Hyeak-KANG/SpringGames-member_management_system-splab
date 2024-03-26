@@ -13,6 +13,7 @@ import test.splab.springgames.modules.member.service.MemberService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -41,7 +42,8 @@ class MainControllerTest {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
-                .andExpect(model().attributeExists("memberList"))
-                .andExpect(model().attribute("memberList", memberService.getMemberListByParamAndPage(null,null, null)));
+                .andExpect(model().attributeExists("data"))
+                .andExpect(model().attribute("currentLevel","ALL"))
+                .andExpect(model().attributeDoesNotExist("searchName")); // null
     }
 }
