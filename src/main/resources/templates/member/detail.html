@@ -5,57 +5,85 @@
 <div class="container">
 	<h1 class="text-center">회원 조회</h1>
 
-	<div id="success-alert" class="success-alert" th:if="${message}" role="alert" th:text="${message}"></div>
+	<div th:if="${message}" class="alert alert-primary alert-dismissible success-alert" role="alert" id="success-alert">
+		<p style="color: #ffffff" th:text="${message}"></p>
+	</div>
 
 	<!--버튼 그룹(돌아가기, 수정, 삭제)-->
-	<div class="flex-box">
-		<button onclick="cancel()">돌아가기</button>
-		<a th:href="@{'/member/edit/'+${memberDetail.id}}">수정</a>
+	<div class="flex-box" style="margin: 20px 0">
+		<button type="button" class="btn btn-secondary" style="width:80px" onclick="cancel()">돌아가기</button>
+		<a type="button" class="btn btn-primary" th:href="@{'/member/edit/'+${memberDetail.id}}">수정</a>
 		<form class="needs-validation" id="form" th:action="@{'/member/remove'}" method="post" novalidate>
-			<input type="hidden" name="memberId" th:value="${memberDetail.id}" />
-			<button type="submit" onclick="return confirm('회원을 정말로 정말로 삭제할까요?')">삭제</button>
+			<input type="hidden" name="memberId" th:value="${memberDetail.id}"/>
+			<button type="submit" class="btn btn-danger" onclick="return confirm('회원을 정말로 정말로 삭제할까요?')">삭제</button>
 		</form>
-
 	</div>
 
 	<!--회원 정보-->
-	<div>
-		<label for="member-id">ID: </label>
-		<input class="no-decoration text-right" id="member-id" type="text" th:value="${memberDetail.id}" disabled/>
+	<div class="flex-box" style="margin:10px 0; width: 330px; align-items: center; justify-content: space-between">
+		<label for="id" style="text-align: end">회원 ID </label>
+		<div class="input-group">
+			<input id="id" type="text" th:value="${memberDetail.id}" class="form-control" style="width: 200px" disabled/>
+		</div>
 	</div>
-	<div>
-		<label for="name">이름: </label>
-		<input class="no-decoration text-right" id="name" type="text" th:value="${memberDetail.name}" disabled/>
+
+	<div class="flex-box" style="margin:10px 0; width: 330px; align-items: center; justify-content: space-between">
+		<label for="name">이름 </label>
+		<div class="input-group">
+			<input id="name" type="text" th:value="${memberDetail.name}" class="form-control" style="width: 200px" disabled/>
+		</div>
 	</div>
-	<div>
-		<label for="email">이메일: </label>
-		<input class="no-decoration text-right" id="email" type="text" th:value="${memberDetail.email}" disabled/>
+
+	<div class="flex-box" style="margin:10px 0; width: 330px; align-items: center; justify-content: space-between">
+		<label for="email">이메일 </label>
+		<div class="input-group">
+			<input id="email" type="text" th:value="${memberDetail.email}" class="form-control" style="width: 200px"
+			       disabled/>
+		</div>
 	</div>
-	<div>
-		<label for="join-at">가입날짜: </label>
-		<input class="no-decoration text-right" id="join-at" type="text" th:value="${memberDetail.joinAt}" disabled/>
+
+	<div class="flex-box" style="margin:10px 0; width: 330px; align-items: center; justify-content: space-between">
+		<label for="join-at">가입날짜</label>
+		<div class="input-group">
+			<input id="join-at" type="text" th:value="${memberDetail.joinAt}" class="form-control" style="width: 200px"
+			       disabled/>
+		</div>
 	</div>
-	<div>
-		<label for="level">레벨: </label>
-		<input class="no-decoration text-right" id="level" type="text" th:value="${memberDetail.level}" disabled/>
+
+	<div class="flex-box" style="margin:10px 0; width: 330px; align-items: center; justify-content: space-between">
+		<label for="level">레벨</label>
+		<div class="input-group">
+			<input id="level" type="text" th:value="${memberDetail.level}" class="form-control" style="width: 200px"
+			       disabled/>
+		</div>
 	</div>
-	<div>
-		<label for="card-total-count">소유 카드 총 개수: </label>
-		<input class="no-decoration text-right" id="card-total-count" type="text" th:value="${memberDetail.cardTotalCount}"
-		       disabled/>
+
+	<div class="flex-box" style="margin:10px 0; width: 330px; align-items: center; justify-content: space-between">
+		<label for="card-total-count">소유카드 개수</label>
+		<div class="input-group">
+			<input id="card-total-count" type="text" th:value="${memberDetail.cardTotalCount}" class="form-control"
+			       style="width: 200px" disabled/>
+		</div>
 	</div>
-	<div>
-		<label for="card-total-price">총 카드 총 가격: </label>
-		<input class="no-decoration text-right" id="card-total-price" type="text"
-		       th:value="'$'+${memberDetail.cardTotalPrice}" disabled/>
+
+	<div class="flex-box" style="margin:10px 0; width: 330px; align-items: center; justify-content: space-between">
+		<label for="card-total-price">소유카드 가격 총합</label>
+		<div class="input-group">
+			<input id="card-total-price" type="text" th:value="'$ '+${memberDetail.cardTotalPrice}" class="form-control"
+			       style="width: 200px" disabled/>
+		</div>
 	</div>
+
+	<div style="border-top: 1px solid black; margin: 20px 0"></div>
+
 
 	<!--게임카드목록-->
-	<h3>소유 게임 카드</h3>
+	<div class="flex-box" style="justify-content: space-between; align-items: center; padding: 0 15px">
+		<h3 style="margin: 5px 0;">소유 게임 카드</h3>
+		<a type="button" class="btn btn-primary" th:href="@{'/card/enroll/member/'+${memberDetail.id}}" style="width: 150px">카드추가</a>
+	</div>
 
-	<a th:href="@{'/card/enroll/member/'+${memberDetail.id}}">카드추가</a>
-
-	<table class="table">
+	<table class="table table-striped table-hover">
 		<thead>
 		<tr>
 			<th>ID</th>
@@ -63,7 +91,7 @@
 			<th>타이틀</th>
 			<th>일련번호</th>
 			<th>가격</th>
-			<th></th>
+			<th style="min-width: 70px"></th>
 		</tr>
 		</thead>
 		<tbody>
@@ -88,8 +116,8 @@
 <script th:replace="~{fragments.html::close-alert-script (alertId='success-alert')}"></script>
 <script type="application/javascript">
 
-	$(document).ready(function() {
-		$('.remove-button').click(function() {
+	$(document).ready(function () {
+		$('.remove-button').click(function () {
 			var cardId = $(this).closest('tr').find('.card-id').text();
 			removeCard(cardId);
 		});
@@ -103,8 +131,8 @@
 				url: "/card/remove",
 				contentType: "application/json",
 				data: JSON.stringify({
-					"cardId" : id,
-					"memberId" : memberId
+					"cardId": id,
+					"memberId": memberId
 				}),
 				success: function (response) {
 					window.location.reload();
