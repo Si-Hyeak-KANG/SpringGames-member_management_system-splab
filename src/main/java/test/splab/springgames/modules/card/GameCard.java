@@ -2,6 +2,7 @@ package test.splab.springgames.modules.card;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import test.splab.springgames.modules.game.Game;
@@ -36,9 +37,17 @@ public class GameCard {
         this.price = price;
     }
 
+    public GameCard(String title, Long serialNumber, double price, Game game) {
+        this.title = title;
+        this.serialNumber = serialNumber;
+        this.price = price;
+        this.game = game;
+    }
+
     public static GameCard of(String title, Long serialNumber, double price) {
         return new GameCard(title, serialNumber, price);
     }
+
     public void addMember(Member member) {
         this.member=member;
         member.getGameCardList().add(this);
