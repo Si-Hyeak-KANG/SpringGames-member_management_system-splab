@@ -6,31 +6,43 @@
 	<h1 class="text-center">회원 등록</h1>
 
 	<div class="flex-box flex-center" style="margin-bottom: 10px">
-		<button onclick="cancel()" class="btn btn-cancel">취소</button>
-		<button type="submit" id="submit-btn" class="btn btn-submit">등록</button>
+		<button type="button" onclick="cancel()" class="btn btn-cancel btn-secondary">취소</button>
+		<button type="submit" id="submit-btn" class="btn btn-submit btn-primary">등록</button>
 	</div>
 
 	<form class="needs-validation" id="form" th:action="@{/member/enroll}" th:object="${enrollFormDto}" method="post"
 	      novalidate>
 		<div class="flex-box" style="flex-direction: column; align-items: center">
 			<div style="margin:10px 0;">
-				<label for="name" style="margin-right:20px">이름 : </label>
-				<input class="form-control" id="name" type="text" th:field="*{name}"/>
+				<label for="name" style="margin-right:20px">이름</label>
+				<div class="input-group flex-nowrap">
+					<input id="name" type="text" th:field="*{name}" placeholder="2자 이상 100자 이하의 한글과 영문만 허용합니다."
+					       class="form-control" aria-describedby="addon-wrapping-name" style="width: 360px"/>
+				</div>
+				<span class="error-text input-group-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+				      id="addon-wrapping-name">이름</span>
 			</div>
-			<p class="error-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name 유효성 검증 실패</p>
-
-
-			<div style="margin:10px 0;">
-				<label for="email" style="margin-right:20px">이메일 : </label>
-				<input id="email" type="text" th:field="*{email}"/>
-			</div>
-			<p class="error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email 유효성 검증 실패</p>
 
 			<div style="margin:10px 0;">
-				<label for="join_at" style="margin-right:20px">가입날짜 : </label>
-				<input id="join_at" type="text" th:field="*{joinAt}"/>
+				<label for="email" style="margin-right:20px">이메일</label>
+				<div class="input-group flex-nowrap">
+					<input id="email" type="text" th:field="*{email}" placeholder="이메일 형식으로 입력해주세요." class="form-control"
+					       aria-describedby="addon-wrapping-email" style="width: 360px"/>
+				</div>
+				<span class="error-text input-group-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+				      id="addon-wrapping-email">이메일</span>
 			</div>
-			<p class="error-text" th:if="${#fields.hasErrors('joinAt')}" th:errors="*{joinAt}">joinAt 유효성 검증 실패</p>
+
+			<div style="margin:10px 0;">
+				<label for="join_at" style="margin-right:20px">가입날짜</label>
+				<div class="input-group flex-nowrap">
+					<input id="join_at" type="text" th:field="*{joinAt}" placeholder="YYYY-MM-DD 형식으로 입력해주세요."
+					       class="form-control" aria-describedby="addon-wrapping-joinAt" style="width: 360px"/>
+				</div>
+				<span class="error-text input-group-text" th:if="${#fields.hasErrors('joinAt')}" th:errors="*{joinAt}"
+				      id="addon-wrapping-joinAt">가입날짜</span>
+			</div>
+
 		</div>
 	</form>
 </div>
