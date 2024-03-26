@@ -2,7 +2,7 @@ package test.splab.springgames.modules.message.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import test.splab.springgames.modules.member.Level;
+import test.splab.springgames.modules.member.level.Level;
 import test.splab.springgames.modules.member.Member;
 
 import java.util.HashMap;

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import test.splab.springgames.exception.BusinessLogicException;
 import test.splab.springgames.exception.ExceptionCode;
 import test.splab.springgames.modules.card.repository.GameCardRepository;
-import test.splab.springgames.modules.member.Level;
+import test.splab.springgames.modules.member.level.Level;
 import test.splab.springgames.modules.member.Member;
 import test.splab.springgames.modules.member.dto.EditFormDto;
 import test.splab.springgames.modules.member.dto.EnrollFormDto;

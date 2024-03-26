@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import test.splab.springgames.modules.card.GameCard;
 import test.splab.springgames.modules.member.dto.EditFormDto;
+import test.splab.springgames.modules.member.level.Level;
+import test.splab.springgames.modules.member.level.LevelPolicy;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Stream;
 
 @NamedEntityGraph(
         name = "Member.withGameCardList",
@@ -109,43 +110,9 @@ public class Member {
     public boolean isChangeLevelAccordingToPolicy() {
         Level baseLevel = this.level;
         Level updateLevel = Level.BRONZE;
-
-        long paiedCardCount = this.gameCardList.stream().filter(card -> card.getPrice() > 0).count();
-
-        if(paiedCardCount > 0) {
-            updateLevel = Level.SILVER;
-        }
-
-        // 게임 카드 목록 중 유료카드 개수가 4개 이상인지 확인
-        boolean isFourOrMorePaidCards = paiedCardCount >= 4;
-
-        boolean isMoreThanTwoDistinctGames = this.gameCardList.stream()
-                .filter(card -> card.getPrice() > 0)
-                .map(card -> card.getGame().getName())
-                .distinct()
-                .count() >= 2;
-
-        // 2장의 유료카드 합이 100달러 이상인지 체크
-        boolean isTwoCardsSumOver100Dollars = this.gameCardList.stream()
-                .filter(card -> card.getPrice() > 0)
-                .mapToDouble(GameCard::getPrice)
-                .sorted()
-                .limit(2)
-                .sum() >= 100;
-
-        // 3장의 유료카드 합이 100달러 이상인지 체크
-        boolean isThreeCardsSumOver100Dollars = this.gameCardList.stream()
-                .filter(card -> card.getPrice() > 0)
-                .mapToDouble(GameCard::getPrice)
-                .sorted()
-                .limit(3)
-                .sum() >= 100;
-
-        if (isMoreThanTwoDistinctGames && (isFourOrMorePaidCards || isTwoCardsSumOver100Dollars || isThreeCardsSumOver100Dollars)) {
-            updateLevel = Level.GOLD;
-        }
+        if(LevelPolicy.isSilver(this.gameCardList)) updateLevel = Level.SILVER;
+        if (LevelPolicy.isGold(this.gameCardList)) updateLevel = Level.GOLD;
         this.level = updateLevel;
         return !baseLevel.equals(this.level);
-
     }
 }

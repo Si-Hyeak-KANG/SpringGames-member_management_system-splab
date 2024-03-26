@@ -7,11 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import test.splab.springgames.modules.member.Level;
+import test.splab.springgames.modules.member.level.Level;
 import test.splab.springgames.modules.member.dto.GetMemberListResultDto;
 import test.splab.springgames.modules.member.service.MemberService;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor

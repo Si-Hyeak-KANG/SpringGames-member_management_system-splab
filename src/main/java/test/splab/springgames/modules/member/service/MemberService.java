@@ -2,13 +2,11 @@ package test.splab.springgames.modules.member.service;
 
 import org.springframework.data.domain.PageRequest;
 import test.splab.springgames.exception.BusinessLogicException;
-import test.splab.springgames.modules.member.Level;
+import test.splab.springgames.modules.member.level.Level;
 import test.splab.springgames.modules.member.dto.EditFormDto;
 import test.splab.springgames.modules.member.dto.EnrollFormDto;
 import test.splab.springgames.modules.member.dto.MemberDetailResultDto;
 import test.splab.springgames.modules.member.dto.GetMemberListResultDto;
-
-import java.util.List;
 
 public interface MemberService {
 

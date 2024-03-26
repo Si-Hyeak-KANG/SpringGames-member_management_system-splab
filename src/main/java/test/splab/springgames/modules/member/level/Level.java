@@ -1,4 +1,4 @@
-package test.splab.springgames.modules.member;
+package test.splab.springgames.modules.member.level;
 
 import lombok.Getter;
 
