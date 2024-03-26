@@ -6,41 +6,55 @@
 	<h1 class="text-center">카드 등록</h1>
 
 	<div class="flex-box flex-center" style="margin-bottom: 10px">
-		<button onclick="cancel()" class="btn btn-cancel">취소</button>
-		<button type="submit" id="submit-btn" class="btn btn-submit">등록</button>
+		<button type="button" onclick="cancel()" class="btn btn-cancel btn-secondary">취소</button>
+		<button type="submit" id="submit-btn" class="btn btn-submit btn-primary">등록</button>
 	</div>
 
 	<form class="needs-validation" id="form" th:action="@{/card/enroll}" th:object="${cardEnrollFormDto}" method="post"
 	      novalidate>
 		<div class="flex-box" style="flex-direction: column; align-items: center">
 
-			<input type="hidden" th:field="*{memberId}" name="memberId" th:value="${cardEnrollFormDto.getMemberId()}" />
-
+			<input type="hidden" th:field="*{memberId}" name="memberId" th:value="${cardEnrollFormDto.getMemberId()}"/>
 			<div style="margin:10px 0;">
-
-				<label for="gameType" style="margin-right:20px">게임종류 </label>
-				<select id="gameType" th:field="*{gameType}">
-					<option th:each="game : ${gameList}" th:value="${game.name}" th:text="${game.name}"></option>
-				</select>
+				<label for="gameType" style="margin-right:20px">게임종류</label>
+				<div class="input-group">
+					<select id="gameType" th:field="*{gameType}" style="width: 200px; height: 40px; padding: 0 10px;">
+						<option th:each="game : ${gameList}" th:value="${game.name}" th:text="${game.name}"></option>
+					</select>
+				</div>
 			</div>
 
 			<div style="margin:10px 0;">
-				<label for="title" style="margin-right:20px">타이틀 : </label>
-				<input class="form-control" id="title" type="text" th:field="*{title}"/>
+				<label for="title" style="margin-right:20px">타이틀</label>
+				<div class="input-group flex-nowrap">
+					<input id="title" type="text" th:field="*{title}" placeholder="1자 이상 100자 이하로 입력해주세요."
+					       class="form-control" aria-describedby="addon-wrapping-title" style="width: 360px"/>
+				</div>
+				<span class="error-text input-group-text" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+				      id="addon-wrapping-title">제목</span>
 			</div>
-			<p class="error-text" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">name 유효성 검증 실패</p>
 
 			<div style="margin:10px 0;">
-				<label for="serialNumber" style="margin-right:20px">일련번호 : </label>
-				<input id="serialNumber" type="text" th:field="*{serialNumber}"/>
+				<label for="serialNumber" style="margin-right:20px">일련번호</label>
+				<div class="input-group flex-nowrap">
+					<input id="serialNumber" type="text" th:field="*{serialNumber}" placeholder="1 이상의 숫자를 입력해주세요."
+					       class="form-control" aria-describedby="addon-wrapping-serialNumber" style="width: 360px"/>
+				</div>
+				<span class="error-text input-group-text" th:if="${#fields.hasErrors('serialNumber')}" th:errors="*{serialNumber}"
+				      id="addon-wrapping-serialNumber">일련번호</span>
 			</div>
-			<p class="error-text" th:if="${#fields.hasErrors('serialNumber')}" th:errors="*{serialNumber}">email 유효성 검증 실패</p>
 
 			<div style="margin:10px 0;">
-				<label for="price" style="margin-right:20px">가격 : </label>
-				<small>$</small><input id="price" type="text" th:field="*{price}"/>
+				<label for="price" style="margin-right:20px">가격</label>
+				<div class="input-group flex-box" style="align-items: center; background-color: #e9ecef; border-radius: 5px">
+					<div style="width: 30px; text-align: center;"><span class="input-group-text">$</span></div>
+					<input id="price" type="text" th:field="*{price}" placeholder="소숫점 2자리인 숫자를 입력해주세요. (최대 $100,000)"
+					       class="form-control" aria-describedby="addon-wrapping-price" style="width: 330px"/>
+				</div>
+				<span class="error-text input-group-text" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+				      id="addon-wrapping-price">가격</span>
 			</div>
-			<p class="error-text" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">email 유효성 검증 실패</p>
+		</div>
 	</form>
 </div>
 
