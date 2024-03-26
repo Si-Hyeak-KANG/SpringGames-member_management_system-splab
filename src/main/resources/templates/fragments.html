@@ -7,17 +7,19 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<meta charset="UTF-8">
 	<title>SpringGames</title>
 	<style>
 		.container {
 			max-widht: 100%;
 			padding: 3% 10%;
+			min-height: 600px;
 		}
 
 		table {
-			border-collapse: collapse;
 			min-width: 100%;
+			margin-top: 30px;
 		}
 
 		td, th {
@@ -44,12 +46,11 @@
 		}
 
 		.success-alert {
-			background-color: lightgreen;
+			background-color: #28a745;
 			height: 50px;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			opacity: 70%;
 			margin: 30px 0;
 		}
 
@@ -74,19 +75,19 @@
 			margin: 0 5px;
 		}
 
-		.btn-cancel {
-			background-color: lightpink;
-		}
-
-		.btn-submit {
-			background-color: lightgreen;
-		}
-
 	</style>
 </head>
 
 <!--FOOTER-->
-<footer th:fragment="footer"></footer>
+<footer th:fragment="footer">
+	<div class="flex-box flex-center" style="background-color: #e9ecef; height: 150px">
+		<p style="font-size: 16px; margin-right: 50px">지원자: 강시혁</p>
+		<div style="padding-bottom: 10px">
+			<i class="fa-brands fa-github" style="font-size: 16px"></i>
+			<a href="https://github.com/Si-Hyeak-KANG" target='_blank' style="margin-left: 5px; font-size: 16px;">GITHUB</a>
+		</div>
+	</div>
+</footer>
 
 <!--FORM SUBMIT FUNCTION-->
 <script type="application/javascript" th:fragment="submit-script">
