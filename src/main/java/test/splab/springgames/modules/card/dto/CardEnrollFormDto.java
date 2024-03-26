@@ -25,11 +25,11 @@ public class CardEnrollFormDto {
     String title;
 
     @Min(value = 1, message = "일련번호는 1 이상의 숫자만 허용합니다.")
-    long serialNumber;
+    Long serialNumber;
 
     @Min(value = 0, message = "가격은 $0 이상이어야 합니다.")
     @Max(value = 100_000, message = "가격은 $100,000 이하의 달러만 허용합니다.")
-    double price;
+    Double price;
 
     public GameCard toEntity() {
         return GameCard.of(this.title, this.serialNumber, this.price);
