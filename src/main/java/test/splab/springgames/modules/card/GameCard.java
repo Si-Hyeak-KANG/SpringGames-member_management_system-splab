@@ -50,7 +50,9 @@ public class GameCard {
 
     public void addMember(Member member) {
         this.member=member;
-        member.getGameCardList().add(this);
+        if (!member.getGameCardList().contains(this)) {
+            member.addGameCard(this);
+        }
     }
 
     public void addGame(Game game) {
@@ -64,7 +66,7 @@ public class GameCard {
     }
 
     public void addMemberAndGame(Member member, Game game) {
-        this.member = member;
-        this.game = game;
+        addMember(member);
+        addGame(game);
     }
 }
