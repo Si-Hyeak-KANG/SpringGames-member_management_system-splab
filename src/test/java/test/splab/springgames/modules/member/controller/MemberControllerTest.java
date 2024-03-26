@@ -9,10 +9,12 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 import test.splab.springgames.infra.MockMvcTest;
+import test.splab.springgames.modules.card.GameCard;
+import test.splab.springgames.modules.card.repository.GameCardRepository;
+import test.splab.springgames.modules.game.Game;
+import test.splab.springgames.modules.game.repository.GameRepository;
 import test.splab.springgames.modules.member.Member;
-import test.splab.springgames.modules.member.dto.EditFormDto;
 import test.splab.springgames.modules.member.dto.EnrollFormDto;
 import test.splab.springgames.modules.member.repository.MemberRepository;
 
@@ -34,6 +36,8 @@ class MemberControllerTest {
 
     @Autowired MockMvc mockMvc;
     @Autowired MemberRepository memberRepository;
+    @Autowired GameCardRepository gameCardRepository;
+    @Autowired GameRepository gameRepository;
 
     @DisplayName("[view]회원등록 페이지 조회 성공")
     @Test
@@ -158,5 +162,52 @@ class MemberControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("member/edit"))
                 .andExpect(model().attributeExists("editFormDto"));
+    }
+
+    @DisplayName("회원삭제 - 회원과 회원이 소유한 카드 동시 삭제")
+    @Test
+    void removeMemberWithGameCardListOfMember() throws Exception {
+
+        Game game = gameRepository.save(new Game("게임1"));
+        Member removeMember = saveMember1(game);
+        Member anotherMember = saveMember2(game);
+
+        long existMemberCount = memberRepository.count();
+        long existCardCount = gameCardRepository.count();
+
+        mockMvc.perform(post(COMMON_URL+"/remove")
+                        .param("memberId", String.valueOf(removeMember.getMemberId())))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl(MAIN_HOME_URL))
+                .andExpect(flash().attributeExists("message"));
+
+        assertEquals(memberRepository.count(), existMemberCount-1);
+        assertEquals(gameCardRepository.count(), existCardCount-removeMember.getGameCardList().size());
+        assertEquals(gameCardRepository.count(), anotherMember.getGameCardList().size());
+    }
+
+    private Member saveMember2(Game game) {
+        Member member2 = memberRepository.save(
+                Member.of("test2", "test2@test.com", LocalDate.now()));
+
+        GameCard gameCard3 = GameCard.of("카드3", 3L, 30);
+        gameCard3.addMemberAndGame(member2, game);
+        gameCardRepository.save(gameCard3);
+        return member2;
+    }
+
+    private Member saveMember1(Game game) {
+        Member member = memberRepository.save(
+                Member.of("test", "test@test.com", LocalDate.now()));
+
+        GameCard gameCard = GameCard.of("카드1", 1L, 30);
+        gameCard.addMemberAndGame(member, game);
+
+        GameCard gameCard2 = GameCard.of("카드2", 2L, 30);
+        gameCard2.addMemberAndGame(member, game);
+
+        gameCardRepository.save(gameCard);
+        gameCardRepository.save(gameCard2);
+        return member;
     }
 }
