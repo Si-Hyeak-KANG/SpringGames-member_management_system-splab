@@ -48,7 +48,7 @@
 				<label for="price" style="margin-right:20px">가격</label>
 				<div class="input-group flex-box" style="align-items: center; background-color: #e9ecef; border-radius: 5px">
 					<div style="width: 30px; text-align: center;"><span class="input-group-text">$</span></div>
-					<input id="price" type="text" th:field="*{price}" placeholder="소숫점 2자리인 숫자를 입력해주세요. (최대 $100,000)"
+					<input id="price" type="text" th:field="*{price}" placeholder="$0 ~ $100,000 사이에 금액을 입력해주세요. (소숫점 2자리까지 허용)"
 					       class="form-control" aria-describedby="addon-wrapping-price" style="width: 330px"/>
 				</div>
 				<span class="error-text input-group-text" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
