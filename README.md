@@ -33,6 +33,12 @@
 - 글로벌 예외 처리 및 예외에 따른 에러 페이지 구현
 - 로그 추적 AOP 구현
 
+### 3) 진행과정
+
+- 이슈관리 [[🔗Link]](https://github.com/Si-Hyeak-KANG/SpringGames-member_management_system-splab/issues?q=is%3Aissue+is%3Aclosed)
+  - Github Projects를 통해 이슈를 관리하고, 과제를 수행했습니다.
+  <img width="500" alt="image" src="https://github.com/Si-Hyeak-KANG/SpringGames-member_management_system-splab/assets/79829085/7e0bba13-5518-4b10-b154-ea9dbc049c77">
+
 <br>
 
 ## GET STARTED
