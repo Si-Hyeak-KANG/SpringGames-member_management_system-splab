@@ -10,7 +10,7 @@
 ### 개발환경
 - Intellij
 - Java(JDK21), SpringBoot 3.2.3, Gradle
-- SpringWeb, SpringDataJpa, SpringValidation, Webflux, Lombok
+- SpringWeb, SpringDataJpa, SpringValidation, Webflux, Lombok, AOP
 - Thymeleaf, Devtools
 - MySQL, H2(테스트)
 - JUnit, assertj
