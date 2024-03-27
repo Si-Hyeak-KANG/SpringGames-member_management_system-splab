@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import test.splab.springgames.exception.dto.ExceptionDto;
 
 @Slf4j
@@ -39,6 +41,10 @@ public class GlobalExceptionHandlerAdvice {
     public ModelAndView handleIllegalArgumentException(Exception e) {
         ExceptionCode exceptionCode =
                 new BusinessLogicException(ExceptionCode.INTERNAL_SERVER_ERROR).getExceptionCode();
+
+        if (e instanceof MethodArgumentTypeMismatchException
+                || e instanceof NoResourceFoundException) return null;
+
         log.error("reason= [{}] {}", exceptionCode.getName(), exceptionCode.getMessage());
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("exception", ExceptionDto.from(exceptionCode));
