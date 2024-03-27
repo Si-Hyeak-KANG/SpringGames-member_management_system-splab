@@ -41,7 +41,7 @@ spring:
 
 logging:
   level:
-    test.splab.springgames.modules : debug
+    test.splab.springgames: DEBUG
 
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

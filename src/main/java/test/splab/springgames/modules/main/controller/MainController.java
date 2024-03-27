@@ -1,4 +1,4 @@
-package test.splab.springgames.modules.main;
+package test.splab.springgames.modules.main.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
