@@ -89,6 +89,7 @@
 		let searchName = document.getElementById('search-name').value;
 		if (level != null) currentUrl.searchParams.set('level', level);
 		currentUrl.searchParams.set('name', searchName);
+		currentUrl.searchParams.set('page', '1');
 		window.location.href = currentUrl.href;
 	}
 
