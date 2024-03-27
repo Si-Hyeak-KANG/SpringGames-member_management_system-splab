@@ -104,7 +104,10 @@
 	<script type="application/javascript">
 		function closeAlert() {
 			setTimeout(function () {
-				document.getElementById("[[${alertId}]]").style.display = 'none';
+				let element = document.getElementById("[[${alertId}]]");
+				if (element && element.style.display !== 'none') {
+					element.style.display = 'none';
+				}
 			}, 1_000);
 		}
 		window.onload = function() {
