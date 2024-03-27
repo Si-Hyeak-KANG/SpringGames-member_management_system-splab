@@ -110,18 +110,18 @@
 	}
 
 	function highlightCurrentPage() {
-		var pageItems = document.querySelectorAll(".page-item"); // 모든 페이지 아이템 가져오기
+		var pageItems = document.querySelectorAll(".page-item");
+		var classActive = " active"
 		pageItems.forEach(function (item) {
 			if (item.id === currentPage) {
-				item.classList.add(" active"); // 현재 페이지에 해당하는 아이템에 active 클래스 추가
+				item.classList.add(classActive);
 			} else {
-				item.classList.remove(" active"); // 다른 페이지 아이템에서 active 클래스 제거
+				if(item.classList.contains(classActive)) item.classList.remove(classActive);
 			}
 		});
 	}
-
-	// 페이지 로드 시에 현재 페이지 강조 함수 호출
 	highlightCurrentPage();
+
 </script>
 </body>
 </html>
